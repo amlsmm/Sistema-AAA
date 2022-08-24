@@ -1,4 +1,4 @@
-CREATE TABLE SISTEMA_AAA.Coordenador (
+CREATE TABLE SISTEMA_AAA.coordenador (
     id INTEGER NOT NULL AUTO_INCREMENT,
     nome VARCHAR(60),
     codigo VARCHAR(5),

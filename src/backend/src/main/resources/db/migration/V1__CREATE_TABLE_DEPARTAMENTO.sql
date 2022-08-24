@@ -1,4 +1,4 @@
-CREATE TABLE SISTEMA_AAA.Departamento (
+CREATE TABLE SISTEMA_AAA.departamento (
     id INTEGER NOT NULL AUTO_INCREMENT,
     nome VARCHAR(60),
     sigla VARCHAR(5),
