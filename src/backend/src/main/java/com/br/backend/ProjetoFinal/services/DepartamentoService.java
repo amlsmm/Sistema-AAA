@@ -1,5 +1,8 @@
 package com.br.backend.ProjetoFinal.services;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,18 @@ public class DepartamentoService{
 
     public Departamento cadastrar(Departamento novoDepartamento){
         return departamentoRepository.save(novoDepartamento);
+    }
+
+    public List<Departamento> listar(){
+        return departamentoRepository.findAll();
+    }
+
+    public Optional<Departamento> listarPorId(Long id){
+        return departamentoRepository.findById(id);
+    }
+
+    public void excluir(Long id){
+        departamentoRepository.deleteById(id);
     }
 
 }
