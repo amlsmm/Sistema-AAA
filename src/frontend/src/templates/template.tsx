@@ -1,3 +1,5 @@
+import Footer from "@components/footer/footer";
+import Navbar from "@components/navigation/navbar";
 import React, { ReactNode } from "react";
 
 type ITemplateProps = {
@@ -9,7 +11,11 @@ const Template = (props: ITemplateProps) => (
   <>
     {props.meta}
 
-    {props.children}
+    <div className="pt-12 min-h-screen flex flex-col justify-between">
+      <Navbar />
+      {props.children}
+      <Footer />
+    </div>
   </>
 );
 
