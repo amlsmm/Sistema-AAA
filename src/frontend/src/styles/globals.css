@@ -1,11 +1,11 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   html,
   body {
-    @apply text-gray-800 bg-gray-50 p-0 m-0 font-sans relative w-full min-w-minimum antialiased overflow-hidden;
+    @apply text-gray-800 bg-gray-50 p-0 m-0 font-sans relative w-full min-w-minimum antialiased overflow-x-hidden;
   }
 
   a {
@@ -18,23 +18,23 @@
   }
 
   h1 {
-    @apply text-5xl lg:text-6xl;
+    @apply text-3xl lg:text-4xl font-medium;
   }
   h2 {
-    @apply text-3xl lg:text-4xl;
+    @apply text-2xl lg:text-3xl font-medium;
   }
   h3 {
-    @apply text-2xl lg:text-3xl;
+    @apply text-xl lg:text-2xl font-medium;
   }
   h4 {
-    @apply text-xl lg:text-2xl;
+    @apply text-lg lg:text-xl font-medium;
   }
   h5 {
-    @apply text-lg lg:text-xl;
+    @apply text-base lg:text-lg font-medium;
   }
 
   .container {
-    @apply mx-auto px-4 sm:px-0 sm:max-w-small md:max-w-medium lg:max-w-large xl:max-w-extra-large 2xl:max-w-extra-extra-large;
+    @apply mx-auto px-4 sm:max-w-small md:max-w-medium lg:max-w-large xl:max-w-extra-large 2xl:max-w-extra-extra-large;
   }
 
   .spacing {
@@ -47,11 +47,6 @@
   --primary: #2361D8;
   --primary-light: #5189f1;
   --primary-lightest: #F6FAFF;
-
-  --secondary-dark: #F5B40C;
-  --secondary: #F5B40C;
-  --secondary-light: #F5B40C;
-  --secondary-lightest: #F5B40C;
   
   --white: #FFF;
   --black: #000;
@@ -62,10 +57,4 @@
   --info: #17a2b8;
   --warning: #F99C11;
   --danger: #EA5E5E;
-
-  --facebook: #1877F2;
-  --linkedin: #2867B2;
-  --twitter: #1DA1F2;
-  --youtube: #FF0000;
-  --whatsapp: #25D366;
 }
