@@ -44,10 +44,10 @@ const Button: React.FC<ButtonProps> = ({
             : "text-sm"
         } ${
           spacing == "small"
-            ? "py-2 px-4"
+            ? "py-2 px-6"
             : spacing == "large"
-            ? "py-3 px-8"
-            : "py-3 px-6"
+            ? "py-3 px-10"
+            : "py-3 px-8"
         } ${
           disabled ? "bg-gray-500" : "hover:opacity-90"
         } ${style} inline-flex items-center justify-center border font-bold rounded-full shadow-sm focus:outline-none transition duration-300`}

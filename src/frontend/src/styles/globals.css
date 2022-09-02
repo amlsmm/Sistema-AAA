@@ -53,8 +53,8 @@
   --transparent: transparent;
   --current: currentColor;
 
-  --success: #28a745;
-  --info: #17a2b8;
+  --success: #48C945;
+  --info: #3682DA;
   --warning: #F99C11;
-  --danger: #EA5E5E;
+  --danger: #C95545;
 }

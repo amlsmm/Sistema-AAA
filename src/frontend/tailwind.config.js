@@ -23,7 +23,7 @@ module.exports = {
         success: "var(--success)",
         info: "var(--info)",
         warning: "var(--warning)",
-        alert: "var(--alert)",
+        danger: "var(--danger)",
       },
       maxWidth: {
         "extra-extra-large": "1280px", // 85rem
@@ -34,6 +34,11 @@ module.exports = {
       },
       minWidth: {
         minimum: "375px",
+      },
+      zIndex: {
+        '100': 100,
+        '200': 200,
+        'max': 999,
       },
       keyframes: {
         "fade-in": {
