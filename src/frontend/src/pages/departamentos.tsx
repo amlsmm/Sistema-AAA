@@ -4,7 +4,7 @@ import { Meta } from "../templates/meta";
 import { Template } from "../templates/template";
 import DataTable from "react-data-table-component";
 import Button from "@components/elements/button";
-import { useState } from "react";
+import { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useEffect, useState } from "react";
 import Modal from "@components/modal/modal";
 import { Cadastrar } from "@utils/AppConfig";
 
@@ -59,26 +59,36 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    id: 1,
-    data: "22/08/2015",
-    nome: "Departamento de Ciência da Computação",
-    sigla: "DCC",
-  },
-  {
-    id: 2,
-    data: "25/08/2015",
-    nome: "Departamento de Ciências Exatas",
-    sigla: "DCE",
-  },
-  {
-    id: 3,
-    data: "01/05/2017",
-    nome: "Departamento de Engenharia",
-    sigla: "DEG",
-  },
-];
+const ListDepto = () => {
+
+  const [departamento, setDepartamento] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+
+    fetch('api/departamento/listar')
+      .then(response => response.json())
+      .then(data => {
+        setDepartamento(data);
+        setLoading(false);
+      })
+  }, []);
+}
+const listDepto = departamento.map((departamento: { id: Key | null | undefined; nome: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; events: any[]; }) => {
+  return <tr key={departamento.id}>
+    <td style={{whiteSpace: 'nowrap'}}>{departamento.nome}</td>
+    <td>{departamento.events.map((event: { id: Key | null | undefined; date: string | number | Date; title: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; }) => {
+      return <div key={event.id}>{new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: '2-digit'
+      }).format(new Date(event.date))}: {event.title}</div>
+    })}</td>
+    <td>
+    </td>
+  </tr>
+});
 
 const Home: NextPage = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -100,18 +110,10 @@ const Home: NextPage = () => {
         </div>
 
         <div className="mt-8 overflow-x-auto animate-fade-in-up text-gray-700">
-          <DataTable
-            columns={columns}
-            data={data}
-            pagination
-            paginationComponentOptions={paginationComponentOptions}
-            highlightOnHover
-            pointerOnHover
-          />
         </div>
       </div>
     </Template>
   );
 };
 
-export default Home;
+export default ListDepto;
