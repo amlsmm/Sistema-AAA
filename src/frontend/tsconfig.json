@@ -26,6 +26,6 @@
       "@lib/*": ["lib/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/app/apiservice.js"],
   "exclude": ["node_modules"]
 }
