@@ -1,4 +1,10 @@
-import { HiOutlineBookOpen, HiOutlineBriefcase, HiOutlineFolderOpen, HiOutlineOfficeBuilding, HiOutlineUserGroup } from "react-icons/hi";
+import {
+  HiOutlineBookOpen,
+  HiOutlineBriefcase,
+  HiOutlineFolderOpen,
+  HiOutlineOfficeBuilding,
+  HiOutlineUserGroup,
+} from "react-icons/hi";
 
 export const AppConfig = {
   site_name: "Sistema Escolar",
@@ -44,33 +50,108 @@ export const NavbarLinks = [
 
 export const Cards = [
   {
-    id: "departamentos",
+    id: "departamento",
     title: "Departamentos",
     icon: HiOutlineOfficeBuilding,
     href: "/departamentos",
   },
   {
-    id: "cursos",
+    id: "curso",
     title: "Cursos",
     icon: HiOutlineFolderOpen,
     href: "/cursos",
   },
   {
-    id: "disciplinas",
+    id: "disciplina",
     title: "Disciplinas",
     icon: HiOutlineBookOpen,
     href: "/disciplinas",
   },
   {
-    id: "professores",
+    id: "professor",
     title: "Professores",
     icon: HiOutlineBriefcase,
     href: "/professores",
   },
   {
-    id: "alunos",
+    id: "aluno",
     title: "Alunos",
     icon: HiOutlineUserGroup,
     href: "/alunos",
+  },
+];
+
+export const Cadastrar = [
+  {
+    id: "departamento",
+    title: "Cadastrar Departamento",
+    form: [
+      {
+        form: "input",
+        id: "nome",
+        label: "Nome:",
+        type: "text",
+        placeholder: "Digite o nome",
+      },
+      {
+        form: "input",
+        id: "sigla",
+        label: "Sigla:",
+        type: "text",
+        placeholder: "Digite a sigla",
+      },
+    ],
+  },
+  {
+    id: "curso",
+    title: "Cadastrar Curso",
+    form: [
+      {
+        form: "input",
+        id: "nome",
+        label: "Nome:",
+        type: "text",
+        placeholder: "Digite o nome",
+      },
+    ],
+  },
+  {
+    id: "disciplina",
+    title: "Cadastrar Disciplina",
+    form: [
+      {
+        form: "input",
+        id: "nome",
+        label: "Nome:",
+        type: "text",
+        placeholder: "Digite o nome",
+      },
+    ],
+  },
+  {
+    id: "professor",
+    title: "Cadastrar Professor",
+    form: [
+      {
+        form: "input",
+        id: "nome",
+        label: "Nome:",
+        type: "text",
+        placeholder: "Digite o nome",
+      },
+    ],
+  },
+  {
+    id: "aluno",
+    title: "Cadastrar Aluno",
+    form: [
+      {
+        form: "input",
+        id: "nome",
+        label: "Nome:",
+        type: "text",
+        placeholder: "Digite o nome",
+      },
+    ],
   },
 ];
