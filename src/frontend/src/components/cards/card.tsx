@@ -1,14 +1,16 @@
 import Button from "@components/elements/button";
+import Modal from "@components/modal/modal";
 import Link from "next/link";
 import { IconBaseProps } from "react-icons";
 
 export interface CardProps {
+  id: string;
   title: string;
   href: string;
   icon: React.ComponentType<IconBaseProps>;
 }
 
-const Card: React.FC<CardProps> = ({ title, href, icon: Icon }) => {
+const Card: React.FC<CardProps> = ({ id, title, href, icon: Icon }) => {
   return (
     <>
       <div className="w-full bg-white rounded-2xl border border-gray-100 shadow-lg text-gray-700 py-6 px-4">
@@ -24,7 +26,7 @@ const Card: React.FC<CardProps> = ({ title, href, icon: Icon }) => {
                 Gerenciar
               </Link>
             </Button>
-            <Button variant="primary">Cadastrar</Button>
+            <Modal type="cadastrar" id={id} button="Cadastrar" />
           </div>
         </div>
       </div>

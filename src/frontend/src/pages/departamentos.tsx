@@ -4,6 +4,9 @@ import { Meta } from "../templates/meta";
 import { Template } from "../templates/template";
 import DataTable from "react-data-table-component";
 import Button from "@components/elements/button";
+import { useState } from "react";
+import Modal from "@components/modal/modal";
+import { Cadastrar } from "@utils/AppConfig";
 
 const paginationComponentOptions = {
   rowsPerPageText: "Departamentos por página",
@@ -78,6 +81,7 @@ const data = [
 ];
 
 const Home: NextPage = () => {
+  const [openModal, setOpenModal] = useState(false);
   return (
     <Template
       meta={
@@ -92,7 +96,7 @@ const Home: NextPage = () => {
       <div className="container py-16">
         <div className="flex justify-between items-center">
           <h2 className="text-gray-700">Departamentos</h2>
-          <Button variant="primary">Cadastrar</Button>
+          <Modal type="cadastrar" id="departamento" button="Cadastrar" />
         </div>
 
         <div className="mt-8 overflow-x-auto animate-fade-in-up text-gray-700">
