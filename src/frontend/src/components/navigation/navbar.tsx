@@ -62,11 +62,9 @@ export default function Navbar() {
                 </Link>
               </>
             ))}
-            <div className="p-4">
-              <p className="inline-flex items-center justify-center gap-2">
-                <HiUserCircle size={32} />
-                Perfil
-              </p>
+            <div className="p-4 inline-flex items-center justify-center gap-2">
+              <HiUserCircle size={32} />
+              <span>Perfil</span>
             </div>
           </div>
         </section>

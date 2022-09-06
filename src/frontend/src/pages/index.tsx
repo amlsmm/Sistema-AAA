@@ -20,7 +20,7 @@ const Home: NextPage = () => {
         <h1 className="text-gray-700 text-center">Seja Bem Vindo!</h1>
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {Cards.map((card) => (
-            <Card title={card.title} icon={card.icon} href={card.href} />
+            <Card id={card.id} title={card.title} icon={card.icon} href={card.href} />
           ))}
         </div>
       </div>
