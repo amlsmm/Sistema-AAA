@@ -24,3 +24,9 @@ Seguindo o padrão de projeto MVC, a arquitetura do BackEnd está dividida pelos
     - GET      /listar/{id}
     - GET      /listar
     - DELETE   /excluir/{id}
+
+- Aluno        /api/aluno:
+    - POST     /cadastrar
+    - GET      /listar/{id}
+    - GET      /listar
+    - DELETE   /excluir/{id}
