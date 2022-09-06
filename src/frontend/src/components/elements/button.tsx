@@ -4,7 +4,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   type?: "submit" | "button";
   size?: "small" | "normal" | "large";
   spacing?: "small" | "normal" | "large";
-  variant?: "white" | "danger" | "success" | "primary" | "outline";
+  variant?: "white" | "danger" | "success" | "primary" | "outline" | "secondary";
   disabled?: boolean;
   fullWidth?: boolean;
   children: React.ReactNode;
@@ -25,6 +25,8 @@ const Button: React.FC<ButtonProps> = ({
       ? "bg-white text-primary"
       : variant === "outline"
       ? "bg-transparent border-primary text-primary"
+      : variant === "secondary"
+      ? "bg-transparent border-gray-500 text-gray-500"
       : variant === "danger"
       ? "bg-danger text-white"
       : variant === "success"
