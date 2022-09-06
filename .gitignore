@@ -1,7 +1,22 @@
-# IDE - VSCode
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+yarn.lock
+package-lock.json
+
+# Optional eslint cache
+.eslintcache
+
+### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+*.code-workspace
 .history/*
+
+# Local History for Visual Studio Code
+.history/
