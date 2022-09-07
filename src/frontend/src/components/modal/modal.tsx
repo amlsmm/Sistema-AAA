@@ -1,6 +1,6 @@
 import Button from "@components/elements/button";
 import { Cadastrar } from "@utils/AppConfig";
-import React from "react";
+import React, { MutableRefObject, useMemo, useRef } from "react";
 import { HiX } from "react-icons/hi";
 
 interface FormProps {
@@ -15,12 +15,39 @@ export interface ModalProps {
   type: "cadastrar" | "excluir" | "editar";
   id: string;
   button: string;
+  //salvar(): void;
 }
 
 const Modal: React.FC<ModalProps> = ({ id, type, button }) => {
   const [showModal, setShowModal] = React.useState(false);
 
   const content = Cadastrar.find((item) => item.id === id);
+
+  let stepInput: React.RefObject<HTMLInputElement> = React.createRef();
+
+  const post = async (type: string, id: string) => {
+
+    let bodyPost = [{}];
+    if(id=="departamento"){
+      bodyPost = [{
+        "nome"  : {content},
+        "sigla" : "",
+        "dataCriacao" : ""
+      }]
+    }
+
+    let response = await fetch(`http://localhost:8080/api/${type}/cadastrar`, {
+       method: 'POST',
+       body: null,
+       headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+       },
+    });
+    let data = await response.json();
+    //setPosts((posts) => [data, ...posts]);
+    //setTitle('');
+    //setBody('');
+ };
 
   return (
     <>
@@ -51,6 +78,7 @@ const Modal: React.FC<ModalProps> = ({ id, type, button }) => {
                           <div className="mb-3 pt-0">
                             <label htmlFor={item.id}>{item.label}</label>
                             <input
+                              ref={stepInput}
                               type={item.type}
                               placeholder={item.placeholder}
                               id={item.id}
@@ -76,7 +104,10 @@ const Modal: React.FC<ModalProps> = ({ id, type, button }) => {
                   {type == "cadastrar" && (
                     <Button
                       variant="success"
-                      onClick={() => setShowModal(false)}
+                      onClick={()=> {
+                        setShowModal(false)
+                        console.log(stepInput.current?.value)
+                      }}
                     >
                       Salvar
                     </Button>

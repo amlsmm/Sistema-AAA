@@ -100,6 +100,12 @@ export const Cadastrar = [
         type: "text",
         placeholder: "Digite a sigla",
       },
+      {
+        form: "input",
+        id: "dataCriacao",
+        label: "Data criação:",
+        type: "date"
+      }
     ],
   },
   {

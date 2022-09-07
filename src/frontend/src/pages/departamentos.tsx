@@ -4,9 +4,10 @@ import { Meta } from "../templates/meta";
 import { Template } from "../templates/template";
 import DataTable from "react-data-table-component";
 import Button from "@components/elements/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "@components/modal/modal";
 import { Cadastrar } from "@utils/AppConfig";
+import moment from "moment";
 
 const paginationComponentOptions = {
   rowsPerPageText: "Departamentos por página",
@@ -19,7 +20,10 @@ const columns = [
   {
     id: "data",
     name: "Data Criação",
-    selector: (row: any) => row.data,
+    selector: (row: any) => {
+      return moment(row.dataCriacao)
+      .format("DD-MM-YYYY")
+    },
     sortable: true,
   },
   {
@@ -39,12 +43,14 @@ const columns = [
     id: "acoes",
     sortable: false,
     right: true,
+    selector: (row: any) => row.id,
     grow: 0,
-    cell: () => (
+    cell: (props : any) => (
       <div className="flex gap-2">
         <button
           type="button"
           className="text-danger p-1 hover:bg-gray-50 rounded-full transition duration-200"
+          onClick={() => deleteDepto(props.id)}
         >
           <HiOutlineTrash size={18} />
         </button>
@@ -59,6 +65,7 @@ const columns = [
   },
 ];
 
+/*
 const data = [
   {
     id: 1,
@@ -79,9 +86,40 @@ const data = [
     sigla: "DEG",
   },
 ];
+*/
 
+const deleteDepto = async (id: number) => {
+  await fetch(`http://localhost:8080/api/departamento/excluir/${id}`, {
+     method: 'DELETE',
+  }).then((response) => {
+     if (response.status === 200) {
+        window.location.reload();
+        console.log(id);
+     } else {
+        return;
+     }
+  });
+  };
+
+const salvar = async() => {
+  await console.log("teste");
+}
+  
 const Home: NextPage = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [deptos, setDeptos] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/api/departamento/listar')
+      .then((response) => response.json())
+      .then((data) => {
+        setDeptos(data);
+      })
+      .catch((err) => {
+        console.log(err.message)
+      });
+  }, []);
+
   return (
     <Template
       meta={
@@ -102,7 +140,7 @@ const Home: NextPage = () => {
         <div className="mt-8 overflow-x-auto animate-fade-in-up text-gray-700">
           <DataTable
             columns={columns}
-            data={data}
+            data={deptos}
             pagination
             paginationComponentOptions={paginationComponentOptions}
             highlightOnHover
