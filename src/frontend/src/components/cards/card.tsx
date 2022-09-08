@@ -26,7 +26,6 @@ const Card: React.FC<CardProps> = ({ id, title, href, icon: Icon }) => {
                 Gerenciar
               </Link>
             </Button>
-            <Modal type="cadastrar" id={id} button="Cadastrar" />
           </div>
         </div>
       </div>

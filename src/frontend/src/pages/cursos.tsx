@@ -4,6 +4,8 @@ import { Meta } from "../templates/meta";
 import { Template } from "../templates/template";
 import DataTable from "react-data-table-component";
 import Button from "@components/elements/button";
+import CadastrarCurso from "@components/modal/cadastrar/curso";
+import { useState } from "react";
 
 const paginationComponentOptions = {
   rowsPerPageText: "Departamentos por página",
@@ -72,6 +74,8 @@ const data = [
 ];
 
 const Home: NextPage = () => {
+  const [showCadastrar, setShowCadastrar] = useState(false);
+  
   return (
     <Template
       meta={
@@ -86,7 +90,10 @@ const Home: NextPage = () => {
       <div className="container py-16">
         <div className="flex justify-between items-center">
           <h2 className="text-gray-700">Cursos</h2>
-          <Button variant="primary">Cadastrar</Button>
+          <CadastrarCurso
+            show={showCadastrar}
+            setShow={setShowCadastrar}
+          />
         </div>
 
         <div className="mt-8 overflow-x-auto animate-fade-in-up text-gray-700">
