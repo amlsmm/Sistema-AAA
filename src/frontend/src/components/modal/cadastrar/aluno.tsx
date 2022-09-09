@@ -6,33 +6,41 @@ import Input from "@components/form/input";
 import FooterModal from "../footer";
 import HeaderModal from "../header";
 import Modal from "../modal";
+import { Select } from "@components/form/select";
 
 export interface CadastrarAlunoProps {
   show: boolean;
   setShow(enabled: boolean): void;
 }
 
-const CadastrarAluno: React.FC<CadastrarAlunoProps> = ({
-  show,
-  setShow,
-}) => {
+const CadastrarAluno: React.FC<CadastrarAlunoProps> = ({ show, setShow }) => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [matricula, setMatricula] = useState("");
+  const [curso, setCurso] = useState("");
+
+  function resetForm() {
+    setNome("");
+    setEmail("");
+    setMatricula("");
+    setCurso("");
+  }
+
+  function handleOpen() {
+    resetForm();
+    setShow(true);
+  }
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    console.log(nome, email, matricula);
+    console.log(nome, email, matricula, curso);
 
     setShow(false);
   }
 
   return (
     <>
-      <Button
-        variant="primary"
-        onClick={() => setShow(true)}
-      >
+      <Button variant="primary" onClick={handleOpen}>
         Cadastrar
       </Button>
       {show && (
@@ -67,6 +75,16 @@ const CadastrarAluno: React.FC<CadastrarAlunoProps> = ({
                   placeholder="Digite a matricula"
                   value={matricula}
                   onChange={(e) => setMatricula(e.target.value)}
+                />
+                <Select
+                  label="Curso:"
+                  placeholder="Selecione o curso"
+                  options={[
+                    { id: "CC", value: "Ciencia da Computação" },
+                    { id: "SI", value: "Sistemas de Informação" },
+                  ]}
+                  onClick={(e) => setCurso(e.currentTarget.id)}
+                  selected={curso}
                 />
               </div>
               <FooterModal

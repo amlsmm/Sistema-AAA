@@ -6,6 +6,7 @@ import Input from "@components/form/input";
 import FooterModal from "../footer";
 import HeaderModal from "../header";
 import Modal from "../modal";
+import { Select } from "@components/form/select";
 
 export interface CadastrarDisciplinaProps {
   show: boolean;
@@ -21,6 +22,18 @@ const CadastrarDisciplina: React.FC<CadastrarDisciplinaProps> = ({
   const [departamento, setDepartamento] = useState("");
   const [professor, setProfessor] = useState("");
 
+  function resetForm() {
+    setNome("");
+    setCodigo("");
+    setDepartamento("");
+    setProfessor("");
+  }
+
+  function handleOpen() {
+    resetForm();
+    setShow(true);
+  }
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     console.log(nome, codigo, departamento, professor);
@@ -30,7 +43,7 @@ const CadastrarDisciplina: React.FC<CadastrarDisciplinaProps> = ({
 
   return (
     <>
-      <Button variant="primary" onClick={() => setShow(true)}>
+      <Button variant="primary" onClick={handleOpen}>
         Cadastrar
       </Button>
       {show && (
@@ -58,21 +71,25 @@ const CadastrarDisciplina: React.FC<CadastrarDisciplinaProps> = ({
                   value={codigo}
                   onChange={(e) => setCodigo(e.target.value)}
                 />
-                <Input
+                <Select
                   label="Departamento:"
-                  id="depto"
-                  type="text"
-                  placeholder="Digite o departamento"
-                  value={departamento}
-                  onChange={(e) => setDepartamento(e.target.value)}
+                  placeholder="Selecione o departamento"
+                  options={[
+                    { id: "DCC", value: "Departamento de Ciência da Computação" },
+                    { id: "DCE", value: "Departamento de Ciências Exatas" },
+                  ]}
+                  onClick={(e) => setDepartamento(e.currentTarget.id)}
+                  selected={departamento}
                 />
-                <Input
+                <Select
                   label="Professor:"
-                  id="professor"
-                  type="text"
-                  placeholder="Digite o nome do professor"
-                  value={professor}
-                  onChange={(e) => setProfessor(e.target.value)}
+                  placeholder="Selecione o professor"
+                  options={[
+                    { id: "001", value: "Jose Maria" },
+                    { id: "002", value: "Maria Jose" },
+                  ]}
+                  onClick={(e) => setProfessor(e.currentTarget.id)}
+                  selected={professor}
                 />
               </div>
               <FooterModal
