@@ -1,5 +1,5 @@
 import Card from "@components/cards/card";
-import { Cards } from "@utils/AppConfig";
+import { Cards } from "@utils/data";
 import type { NextPage } from "next";
 import { Meta } from "../templates/meta";
 import { Template } from "../templates/template";
