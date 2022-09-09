@@ -1,23 +1,17 @@
-import {
-  HiOutlinePencilAlt,
-  HiOfficeBuilding,
-} from "react-icons/hi";
 import type { NextPage } from "next";
-import { Meta } from "../templates/meta";
-import { Template } from "../templates/template";
-import DataTable from "react-data-table-component";
 import { useEffect, useState } from "react";
+import { HiOutlinePencilAlt, HiOfficeBuilding } from "react-icons/hi";
+/* templates */
+import { Meta } from "@templates/meta";
+import { Template } from "@templates/template";
+/* utils */
+import { paginationComponentOptions } from "@utils/table";
+/* components */
+import DataTable from "react-data-table-component";
 import CadastrarDepartamento from "@components/modal/cadastrar/departamento";
-import moment from "moment";
 import { EmptyTable } from "@components/empty/table";
 import Excluir from "@components/modal/delete";
-
-const paginationComponentOptions = {
-  rowsPerPageText: "Departamentos por página",
-  rangeSeparatorText: "de",
-  selectAllRowsItem: true,
-  selectAllRowsItemText: "Todos",
-};
+import moment from "moment";
 
 const columns = [
   {

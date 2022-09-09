@@ -1,19 +1,16 @@
-import { HiOutlinePencilAlt, HiFolderOpen } from "react-icons/hi";
 import type { NextPage } from "next";
-import { Meta } from "../templates/meta";
-import { Template } from "../templates/template";
+import { useState } from "react";
+import { HiOutlinePencilAlt, HiFolderOpen } from "react-icons/hi";
+/* templates */
+import { Meta } from "@templates/meta";
+import { Template } from "@templates/template";
+/* utils */
+import { paginationComponentOptions } from "@utils/table";
+/* components */
 import DataTable from "react-data-table-component";
 import CadastrarCurso from "@components/modal/cadastrar/curso";
-import { useState } from "react";
 import { EmptyTable } from "@components/empty/table";
 import Excluir from "@components/modal/delete";
-
-const paginationComponentOptions = {
-  rowsPerPageText: "Departamentos por página",
-  rangeSeparatorText: "de",
-  selectAllRowsItem: true,
-  selectAllRowsItemText: "Todos",
-};
 
 const columns = [
   {
