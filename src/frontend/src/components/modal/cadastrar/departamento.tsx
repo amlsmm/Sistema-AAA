@@ -7,6 +7,8 @@ import FooterModal from "../footer";
 import HeaderModal from "../header";
 import Modal from "../modal";
 
+import moment from "moment";
+
 export interface CadastrarDepartamentoProps {
   show: boolean;
   setShow(enabled: boolean): void;
@@ -19,9 +21,33 @@ const CadastrarDepartamento: React.FC<CadastrarDepartamentoProps> = ({
   const [nome, setNome] = useState("");
   const [sigla, setSigla] = useState("");
 
+  const addDepartamento = async (nome: string, sigla: string) => {
+    var today = new Date();
+    let response = await fetch(`http://localhost:8080/api/departamento/cadastrar`, {
+       method: 'POST',
+       body: JSON.stringify({
+          nome: nome,
+          sigla: sigla,
+          dataCriacao: moment().format("YYYY-MM-DD")
+       }),
+       headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+       },
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      setNome('');
+      setSigla('')
+      window.location.reload();
+    })
+    .catch((err) => {
+      console.log(err.message);
+    })
+ };
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    console.log(nome, sigla);
+    addDepartamento(nome, sigla);
 
     setShow(false);
   }
