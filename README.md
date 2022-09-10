@@ -55,7 +55,7 @@ main, backend e frontend
 - Notação: camelCase
 - Comentários: não comentar
 - Identar código
-- Tesar sempre os programas
+- Testar sempre os programas
 
 ### 4. Organização do Projeto:
 
