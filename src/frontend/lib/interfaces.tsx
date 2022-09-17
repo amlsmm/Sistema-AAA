@@ -1,3 +1,17 @@
+export interface IRetornoApi {
+    erro: boolean;
+    mensagem: string;
+    totalDeRegistros: number;
+    unico?: any,
+    lista?: any,
+  }
+  
+  export interface IRetornoApiLogin {
+    erro: boolean;
+    mensagem: string;
+    unico?: any,
+  }
+
 export interface IAluno {
     nome: string,
     email: string;

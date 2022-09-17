@@ -38,7 +38,7 @@ const CadastrarCurso: React.FC<CadastrarCursoProps> = ({ show, setShow }) => {
 
   return (
     <>
-      <Button variant="primary" onClick={() => setShow(true)}>
+      <Button variant="primary" onClick={handleOpen}>
         Cadastrar
       </Button>
       {show && (
@@ -72,8 +72,8 @@ const CadastrarCurso: React.FC<CadastrarCursoProps> = ({ show, setShow }) => {
                   selected={departamento}
                 />
                 <Select
-                  label="Periodos:"
-                  placeholder="Selecione os periodos"
+                  label="Periodo:"
+                  placeholder="Selecione o periodo"
                   options={[
                     { id: "20221", value: "2021/1" },
                     { id: "20222", value: "2021/2" },
