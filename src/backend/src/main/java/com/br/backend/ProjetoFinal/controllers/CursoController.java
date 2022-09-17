@@ -27,6 +27,7 @@ public class CursoController {
 
     @PostMapping(path = "/cadastrar" )
     public ResponseEntity<Curso> cadastrarCurso(@RequestBody Curso novoCurso){
+        System.out.println(novoCurso);
         return ResponseEntity.ok().body(cursoService.cadastrar(novoCurso));
     }
 

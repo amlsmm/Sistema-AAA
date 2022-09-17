@@ -46,7 +46,7 @@ const CadastrarDepartamento: React.FC<CadastrarDepartamentoProps> = ({
     .then((response) => response.json())
     .then((data) => {
       setNome('');
-      setSigla('')
+      setSigla('');
       window.location.reload();
     })
     .catch((err) => {

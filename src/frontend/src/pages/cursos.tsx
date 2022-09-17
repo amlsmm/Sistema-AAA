@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiOutlinePencilAlt, HiFolderOpen } from "react-icons/hi";
 /* templates */
 import { Meta } from "@templates/meta";
@@ -55,7 +55,7 @@ const columns = [
     ),
   },
 ];
-
+/*
 const data = [
   {
     id: 1,
@@ -70,10 +70,27 @@ const data = [
     periodo: "2022/2",
   },
 ];
+*/
+
 
 const Home: NextPage = () => {
   const [showCadastrar, setShowCadastrar] = useState(false);
-  
+  const [cursos, setCursos] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/curso/listar")
+      .then((response) => response.json())
+      .then((data) => {
+        data.map( (curso: any) => {
+          curso.departamento = curso.departamento.nome;
+        })
+        setCursos(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
   return (
     <Template
       meta={
@@ -97,7 +114,7 @@ const Home: NextPage = () => {
         <div className="mt-8 overflow-x-auto animate-fade-in-up text-gray-700">
           <DataTable
             columns={columns}
-            data={data}
+            data={cursos}
             pagination
             paginationComponentOptions={paginationComponentOptions}
             highlightOnHover
