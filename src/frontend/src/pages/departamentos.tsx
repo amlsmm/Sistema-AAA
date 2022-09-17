@@ -3,10 +3,7 @@ import type { NextPage } from "next";
 import { Meta } from "../templates/meta";
 import { Template } from "../templates/template";
 import DataTable from "react-data-table-component";
-import Button from "@components/elements/button";
 import { useEffect, useState } from "react";
-import Modal from "@components/modal/modal";
-import { Cadastrar } from "@utils/AppConfig";
 import CadastrarDepartamento from "@components/modal/cadastrar/departamento";
 import moment from "moment";
 
@@ -93,7 +90,7 @@ const deleteDepto = async (id: number) => {
     console.log(response)
     window.location.reload();
   });
-  };
+};
 
 const Home: NextPage = () => {
   const [showCadastrar, setShowCadastrar] =

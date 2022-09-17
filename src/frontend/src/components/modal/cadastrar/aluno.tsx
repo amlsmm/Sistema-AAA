@@ -6,6 +6,7 @@ import Input from "@components/form/input";
 import FooterModal from "../footer";
 import HeaderModal from "../header";
 import Modal from "../modal";
+import moment from "moment";
 
 export interface CadastrarAlunoProps {
   show: boolean;
@@ -20,9 +21,34 @@ const CadastrarAluno: React.FC<CadastrarAlunoProps> = ({
   const [email, setEmail] = useState("");
   const [matricula, setMatricula] = useState("");
 
+  const addAluno = async (nome: string, sigla: string, matricula: string) => {
+    let response = await fetch(`http://localhost:8080/api/aluno/cadastrar`, {
+       method: 'POST',
+       body: JSON.stringify({
+          nome: nome,
+          sigla: sigla,
+          dataCriacao: moment().format("YYYY-MM-DD")
+       }),
+       headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+       },
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      setNome('');
+      setEmail('');
+      setMatricula('');
+      window.location.reload();
+    })
+    .catch((err) => {
+      console.log(err.message);
+    })
+ };
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     console.log(nome, email, matricula);
+    addAluno(nome, email, matricula);
 
     setShow(false);
   }

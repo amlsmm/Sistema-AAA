@@ -22,7 +22,6 @@ const CadastrarDepartamento: React.FC<CadastrarDepartamentoProps> = ({
   const [sigla, setSigla] = useState("");
 
   const addDepartamento = async (nome: string, sigla: string) => {
-    var today = new Date();
     let response = await fetch(`http://localhost:8080/api/departamento/cadastrar`, {
        method: 'POST',
        body: JSON.stringify({
