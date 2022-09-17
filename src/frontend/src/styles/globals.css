@@ -40,6 +40,15 @@
   .spacing {
     @apply py-8 sm:py-16 lg:py-24;
   }
+
+}
+
+.rdt_TableCol{
+  font-size: 14px !important;
+}
+
+.rdt_TableCell{
+  font-size: 16px !important;
 }
 
 :root {

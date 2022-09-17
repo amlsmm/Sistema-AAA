@@ -6,6 +6,7 @@ import Input from "@components/form/input";
 import FooterModal from "../footer";
 import HeaderModal from "../header";
 import Modal from "../modal";
+import { Select } from "@components/form/select";
 
 export interface CadastrarProfessorProps {
   show: boolean;
@@ -17,9 +18,21 @@ const CadastrarProfessor: React.FC<CadastrarProfessorProps> = ({
   setShow,
 }) => {
   const [nome, setNome] = useState("");
-  const [dataNasc, setDataNasc] = useState('');
-  const [departamento, setDepartamento] = useState('');
-  const [salario, setSalario] = useState('');
+  const [dataNasc, setDataNasc] = useState("");
+  const [departamento, setDepartamento] = useState("");
+  const [salario, setSalario] = useState("");
+
+  function resetForm() {
+    setNome("");
+    setDataNasc("");
+    setDepartamento("");
+    setSalario("");
+  }
+
+  function handleOpen() {
+    resetForm();
+    setShow(true);
+  }
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -30,10 +43,7 @@ const CadastrarProfessor: React.FC<CadastrarProfessorProps> = ({
 
   return (
     <>
-      <Button
-        variant="primary"
-        onClick={() => setShow(true)}
-      >
+      <Button variant="primary" onClick={handleOpen}>
         Cadastrar
       </Button>
       {show && (
@@ -56,23 +66,30 @@ const CadastrarProfessor: React.FC<CadastrarProfessorProps> = ({
                 <Input
                   label="Data de Nascimento:"
                   id="dataNasc"
-                  type="text"
+                  type="date"
                   placeholder="Digite a data"
                   value={dataNasc}
                   onChange={(e) => setDataNasc(e.target.value)}
                 />
-                <Input
+                <Select
                   label="Departamento:"
-                  id="depto"
-                  type="text"
-                  placeholder="Digite o departamento"
-                  value={departamento}
-                  onChange={(e) => setDepartamento(e.target.value)}
+                  placeholder="Selecione o departamento"
+                  options={[
+                    {
+                      id: "DCC",
+                      value: "Departamento de Ciência da Computação",
+                    },
+                    { id: "DCE", value: "Departamento de Ciências Exatas" },
+                  ]}
+                  onClick={(e) => setDepartamento(e.currentTarget.id)}
+                  selected={departamento}
                 />
                 <Input
                   label="Salario:"
                   id="salario"
-                  type="text"
+                  type="number"
+                  min="0"
+                  step="1"
                   placeholder="Digite o salario"
                   value={salario}
                   onChange={(e) => setSalario(e.target.value)}

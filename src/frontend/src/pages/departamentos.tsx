@@ -1,26 +1,24 @@
-import { HiOutlineTrash, HiOutlinePencilAlt } from "react-icons/hi";
 import type { NextPage } from "next";
-import { Meta } from "../templates/meta";
-import { Template } from "../templates/template";
-import DataTable from "react-data-table-component";
 import { useEffect, useState } from "react";
+import { HiOutlinePencilAlt, HiOfficeBuilding } from "react-icons/hi";
+/* templates */
+import { Meta } from "@templates/meta";
+import { Template } from "@templates/template";
+/* utils */
+import { paginationComponentOptions } from "@utils/table";
+/* components */
+import DataTable from "react-data-table-component";
 import CadastrarDepartamento from "@components/modal/cadastrar/departamento";
+import { EmptyTable } from "@components/empty/table";
+import Excluir from "@components/modal/delete";
 import moment from "moment";
-
-const paginationComponentOptions = {
-  rowsPerPageText: "Departamentos por página",
-  rangeSeparatorText: "de",
-  selectAllRowsItem: true,
-  selectAllRowsItemText: "Todos",
-};
 
 const columns = [
   {
     id: "data",
     name: "Data Criação",
     selector: (row: any) => {
-      return moment(row.dataCriacao)
-      .format("DD-MM-YYYY")
+      return moment(row.dataCriacao).format("DD-MM-YYYY");
     },
     sortable: true,
   },
@@ -44,13 +42,11 @@ const columns = [
     grow: 0,
     cell: (props: any) => (
       <div className="flex gap-2">
-        <button
-          type="button"
-          className="text-danger p-1 hover:bg-gray-50 rounded-full transition duration-200"
+        <Excluir
+          title="Excluir Departamento"
+          description="Tem certeza que deseja excluir esse departamento?"
           onClick={() => deleteDepto(props.id)}
-        >
-          <HiOutlineTrash size={18} />
-        </button>
+        />
         <button
           type="button"
           className="text-primary p-1 hover:bg-gray-50 rounded-full transition duration-200"
@@ -69,42 +65,30 @@ const data = [
     nome: "Departamento de Ciência da Computação",
     sigla: "DCC",
   },
-  {
-    id: 2,
-    data: "25/08/2015",
-    nome: "Departamento de Ciências Exatas",
-    sigla: "DCE",
-  },
-  {
-    id: 3,
-    data: "01/05/2017",
-    nome: "Departamento de Engenharia",
-    sigla: "DEG",
-  },
+  ...
 ];
 */
 const deleteDepto = async (id: number) => {
   await fetch(`http://localhost:8080/api/departamento/excluir/${id}`, {
-     method: 'DELETE',
+    method: "DELETE",
   }).then((response) => {
-    console.log(response)
+    console.log(response);
     window.location.reload();
   });
 };
 
 const Home: NextPage = () => {
-  const [showCadastrar, setShowCadastrar] =
-    useState(false);
+  const [showCadastrar, setShowCadastrar] = useState(false);
   const [deptos, setDeptos] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/departamento/listar')
+    fetch("http://localhost:8080/api/departamento/listar")
       .then((response) => response.json())
       .then((data) => {
         setDeptos(data);
       })
       .catch((err) => {
-        console.log(err.message)
+        console.log(err.message);
       });
   }, []);
 
@@ -136,6 +120,13 @@ const Home: NextPage = () => {
             paginationComponentOptions={paginationComponentOptions}
             highlightOnHover
             pointerOnHover
+            noDataComponent={
+              <EmptyTable
+                title="Não há departamentos cadastrados :("
+                description="Cadastre um departamento no botão Cadastrar!"
+                icon={HiOfficeBuilding}
+              />
+            }
           />
         </div>
       </div>

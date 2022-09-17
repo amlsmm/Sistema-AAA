@@ -1,18 +1,16 @@
-import { HiOutlineTrash, HiOutlinePencilAlt } from "react-icons/hi";
 import type { NextPage } from "next";
-import { Meta } from "../templates/meta";
-import { Template } from "../templates/template";
-import DataTable from "react-data-table-component";
-import Button from "@components/elements/button";
-import CadastrarCurso from "@components/modal/cadastrar/curso";
 import { useState } from "react";
-
-const paginationComponentOptions = {
-  rowsPerPageText: "Departamentos por página",
-  rangeSeparatorText: "de",
-  selectAllRowsItem: true,
-  selectAllRowsItemText: "Todos",
-};
+import { HiOutlinePencilAlt, HiFolderOpen } from "react-icons/hi";
+/* templates */
+import { Meta } from "@templates/meta";
+import { Template } from "@templates/template";
+/* utils */
+import { paginationComponentOptions } from "@utils/table";
+/* components */
+import DataTable from "react-data-table-component";
+import CadastrarCurso from "@components/modal/cadastrar/curso";
+import { EmptyTable } from "@components/empty/table";
+import Excluir from "@components/modal/delete";
 
 const columns = [
   {
@@ -20,6 +18,7 @@ const columns = [
     name: "Nome",
     selector: (row: any) => row.nome,
     sortable: true,
+    width: "40%",
   },
   {
     id: "depto",
@@ -32,21 +31,20 @@ const columns = [
     name: "Período",
     selector: (row: any) => row.periodo,
     sortable: true,
-    grow: 0,
+    width: "15%",
   },
   {
     id: "acoes",
     sortable: false,
     right: true,
     grow: 0,
-    cell: () => (
+    cell: (props: any) => (
       <div className="flex gap-2">
-        <button
-          type="button"
-          className="text-danger p-1 hover:bg-gray-50 rounded-full transition duration-200"
-        >
-          <HiOutlineTrash size={18} />
-        </button>
+        <Excluir
+          title="Excluir Curso"
+          description="Tem certeza que deseja excluir esse curso?"
+          onClick={() => (console.log("Excluiu curso!"))}
+        />
         <button
           type="button"
           className="text-primary p-1 hover:bg-gray-50 rounded-full transition duration-200"
@@ -104,6 +102,7 @@ const Home: NextPage = () => {
             paginationComponentOptions={paginationComponentOptions}
             highlightOnHover
             pointerOnHover
+            noDataComponent={<EmptyTable title="Não há cursos cadastrados :(" description="Cadastre um curso no botão Cadastrar!" icon={HiFolderOpen} />}
           />
         </div>
       </div>

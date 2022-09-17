@@ -1,18 +1,16 @@
-import { HiOutlineTrash, HiOutlinePencilAlt } from "react-icons/hi";
 import type { NextPage } from "next";
-import { Meta } from "../templates/meta";
-import { Template } from "../templates/template";
-import DataTable from "react-data-table-component";
-import Button from "@components/elements/button";
 import { useState } from "react";
+import { HiOutlinePencilAlt, HiOutlineBookOpen } from "react-icons/hi";
+/* templates */
+import { Meta } from "@templates/meta";
+import { Template } from "@templates/template";
+/* utils */
+import { paginationComponentOptions } from "@utils/table";
+/* components */
+import DataTable from "react-data-table-component";
 import CadastrarDisciplina from "@components/modal/cadastrar/disciplina";
-
-const paginationComponentOptions = {
-  rowsPerPageText: "Departamentos por página",
-  rangeSeparatorText: "de",
-  selectAllRowsItem: true,
-  selectAllRowsItemText: "Todos",
-};
+import { EmptyTable } from "@components/empty/table";
+import Excluir from "@components/modal/delete";
 
 const columns = [
   {
@@ -20,7 +18,7 @@ const columns = [
     name: "Código",
     selector: (row: any) => row.codigo,
     sortable: true,
-    grow: 0,
+    width: "10%",
   },
   {
     id: "nome",
@@ -47,12 +45,11 @@ const columns = [
     grow: 0,
     cell: () => (
       <div className="flex gap-2">
-        <button
-          type="button"
-          className="text-danger p-1 hover:bg-gray-50 rounded-full transition duration-200"
-        >
-          <HiOutlineTrash size={18} />
-        </button>
+        <Excluir
+          title="Excluir Disciplina"
+          description="Tem certeza que deseja excluir esse disciplina?"
+          onClick={() => (console.log("Excluiu Disciplina!"))}
+        />
         <button
           type="button"
           className="text-primary p-1 hover:bg-gray-50 rounded-full transition duration-200"
@@ -114,6 +111,7 @@ const Home: NextPage = () => {
             paginationComponentOptions={paginationComponentOptions}
             highlightOnHover
             pointerOnHover
+            noDataComponent={<EmptyTable title="Não há disciplinas cadastrados :(" description="Cadastre um disciplina no botão Cadastrar!" icon={HiOutlineBookOpen} />}
           />
         </div>
       </div>

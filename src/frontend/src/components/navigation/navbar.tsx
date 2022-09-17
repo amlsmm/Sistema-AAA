@@ -1,5 +1,5 @@
 import { HiAcademicCap, HiMenu, HiUserCircle, HiX } from "react-icons/hi";
-import { NavbarLinks } from "@utils/AppConfig";
+import { NavbarLinks } from "@utils/data";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -18,11 +18,8 @@ export default function Navbar() {
             </div>
             <div className="hidden lg:ml-6 lg:flex lg:items-center">
               {NavbarLinks.map((item) => (
-                <Link href={item.href}>
-                  <a
-                    key={item.id}
-                    className="h-full inline-flex items-center py-2 px-4"
-                  >
+                <Link href={item.href} key={item.id}>
+                  <a className="h-full inline-flex items-center py-2 px-4">
                     {item.title}
                   </a>
                 </Link>
@@ -54,13 +51,9 @@ export default function Navbar() {
         <section className="lg:hidden bg-white shadow-lg py-8 text-gray-700 animate-fade-in">
           <div className="space-y-1 px-2 font-bold">
             {NavbarLinks.map((item) => (
-              <>
-                <Link href={item.href}>
-                  <a key={item.id} className="block px-4 py-2 text-lg">
-                    {item.title}
-                  </a>
-                </Link>
-              </>
+              <Link href={item.href} key={item.id}>
+                <a className="block px-4 py-2 text-lg">{item.title}</a>
+              </Link>
             ))}
             <div className="p-4 inline-flex items-center justify-center gap-2">
               <HiUserCircle size={32} />

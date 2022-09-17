@@ -1,18 +1,16 @@
-import { HiOutlineTrash, HiOutlinePencilAlt } from "react-icons/hi";
 import type { NextPage } from "next";
-import { Meta } from "../templates/meta";
-import { Template } from "../templates/template";
-import DataTable from "react-data-table-component";
-import Button from "@components/elements/button";
 import { useEffect, useState } from "react";
+import { HiOutlinePencilAlt, HiOutlineTrash, HiOutlineUserGroup } from "react-icons/hi";
+/* templates */
+import { Meta } from "@templates/meta";
+import { Template } from "@templates/template";
+/* utils */
+import { paginationComponentOptions } from "@utils/table";
+/* components */
+import DataTable from "react-data-table-component";
 import CadastrarAluno from "@components/modal/cadastrar/aluno";
-
-const paginationComponentOptions = {
-  rowsPerPageText: "Departamentos por página",
-  rangeSeparatorText: "de",
-  selectAllRowsItem: true,
-  selectAllRowsItemText: "Todos",
-};
+import { EmptyTable } from "@components/empty/table";
+import Excluir from "@components/modal/delete";
 
 const columns = [
   {
@@ -49,6 +47,11 @@ const columns = [
         >
           <HiOutlineTrash size={18} />
         </button>
+        <Excluir
+          title="Excluir Aluno"
+          description="Tem certeza que deseja excluir esse aluno?"
+          onClick={() => (console.log("Excluiu Aluno!"))}
+        />
         <button
           type="button"
           className="text-primary p-1 hover:bg-gray-50 rounded-full transition duration-200"
@@ -133,6 +136,7 @@ const Home: NextPage = () => {
             paginationComponentOptions={paginationComponentOptions}
             highlightOnHover
             pointerOnHover
+            noDataComponent={<EmptyTable title="Não há alunos cadastrados :(" description="Cadastre um aluno no botão Cadastrar!" icon={HiOutlineUserGroup} />}
           />
         </div>
       </div>
