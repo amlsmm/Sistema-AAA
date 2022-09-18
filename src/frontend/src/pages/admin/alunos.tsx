@@ -20,7 +20,14 @@ const columns = [
     name: "Matrícula",
     selector: (row: any) => row.matricula,
     sortable: true,
-    width: "20%",
+    width: "15%",
+  },
+  {
+    id: "curso",
+    nome: "Curso",
+    selector: (row: any) => row.curso.nome,
+    sortable: true,
+    width: "25%"
   },
   {
     id: "nome",
@@ -42,17 +49,10 @@ const columns = [
     grow: 0,
     cell: (props: any) => (
       <div className="flex gap-2">
-        <button
-          type="button"
-          className="text-danger p-1 hover:bg-gray-50 rounded-full transition duration-200"
-          onClick={() => deleteAluno(props.id)}
-        >
-          <HiOutlineTrash size={18} />
-        </button>
         <Excluir
           title="Excluir Aluno"
           description="Tem certeza que deseja excluir esse aluno?"
-          onClick={() => (console.log("Excluiu Aluno!"))}
+          onClick={() => deleteAluno(props.id)}
         />
         <button
           type="button"
@@ -65,6 +65,7 @@ const columns = [
   },
 ];
 
+/*
 const data = [
   {
     id: 1,
@@ -85,6 +86,7 @@ const data = [
     email: "camila.rodrigues@estudante.ufla.br",
   },
 ];
+*/
 
 const deleteAluno = async (id: number) => {
   await fetch(`http://localhost:8080/api/aluno/excluir/${id}`, {

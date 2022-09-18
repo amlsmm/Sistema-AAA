@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 // components
 import Button from "@components/elements/button";
 import Input from "@components/form/input";
@@ -24,6 +24,22 @@ type Inputs = {
 
 const CadastrarAluno: React.FC<CadastrarAlunoProps> = ({ show, setShow }) => {
   const [curso, setCurso] = useState("");
+  const [cursos, setCursos] = useState<any>([]);
+
+  let options = cursos.map(function (curso: any) {
+    return { value: curso.nome.toString(), id: curso.id };
+  });
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/curso/listar")
+      .then((response) => response.json())
+      .then((data) => {
+        setCursos(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
 
   function handleOpen() {
     setShow(true);
@@ -40,13 +56,19 @@ const CadastrarAluno: React.FC<CadastrarAlunoProps> = ({ show, setShow }) => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
 
+    var curso = cursos.filter((obj: any) => {
+      return obj.id == data.curso;
+    });
+
+    curso = curso[0];
+
     let response = await fetch(`http://localhost:8080/api/aluno/cadastrar`, {
       method: "POST",
       body: JSON.stringify({
         nome: data.nome,
         email: data.email,
         matricula: data.matricula,
-        dataCriacao: moment().format("YYYY-MM-DD"),
+        curso: curso,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -111,10 +133,7 @@ const CadastrarAluno: React.FC<CadastrarAlunoProps> = ({ show, setShow }) => {
                 <Select
                   label="Curso:"
                   placeholder="Selecione o curso"
-                  options={[
-                    { id: "CC", value: "Ciencia da Computação" },
-                    { id: "SI", value: "Sistemas de Informação" },
-                  ]}
+                  options={options}
                   onClick={(e) => {
                     setValue("curso", e.currentTarget.id);
                     setCurso(e.currentTarget.id);

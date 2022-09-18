@@ -45,7 +45,7 @@ const columns = [
         <Excluir
           title="Excluir Curso"
           description="Tem certeza que deseja excluir esse curso?"
-          onClick={() => (console.log("Excluiu curso!"))}
+          onClick={() => (deleteCurso(props.id))}
         />
         <button
           type="button"
@@ -57,6 +57,15 @@ const columns = [
     ),
   },
 ];
+
+const deleteCurso = async (id: number) => {
+  await fetch(`http://localhost:8080/api/curso/excluir/${id}`, {
+    method: "DELETE",
+  }).then((response) => {
+    console.log(response);
+    window.location.reload();
+  });
+};
 /*
 const data = [
   {

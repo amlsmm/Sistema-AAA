@@ -73,7 +73,7 @@ const CadastrarProfessor: React.FC<CadastrarProfessorProps> = ({
         body: JSON.stringify({
           nome: data.nome,
           dataNasc: dataNasc.format("YYYY-MM-DD"),
-          departamento: data.departamento,
+          departamento: departamento,
           salario: data.salario,
         }),
         headers: {

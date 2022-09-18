@@ -48,12 +48,12 @@ const columns = [
     sortable: false,
     right: true,
     grow: 0,
-    cell: () => (
+    cell: (props: any) => (
       <div className="flex gap-2">
         <Excluir
           title="Excluir Professor"
           description="Tem certeza que deseja excluir esse professor?"
-          onClick={() => (console.log("Excluiu Professor!"))}
+          onClick={() => (deleteProfessor(props.id))}
         />
         <button
           type="button"
@@ -65,6 +65,16 @@ const columns = [
     ),
   },
 ];
+
+const deleteProfessor = async (id: number) => {
+  await fetch(`http://localhost:8080/api/professor/excluir/${id}`, {
+    method: "DELETE",
+  }).then((response) => {
+    console.log(response);
+    window.location.reload();
+  });
+};
+
 /*
 const data = [
   {

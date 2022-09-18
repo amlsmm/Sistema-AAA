@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiOutlinePencilAlt, HiOutlineBookOpen } from "react-icons/hi";
 /* templates */
 import { Meta } from "@templates/meta";
@@ -31,13 +31,13 @@ const columns = [
   {
     id: "depto",
     name: "Departamento",
-    selector: (row: any) => row.departamento,
+    selector: (row: any) => row.departamento.nome,
     sortable: true,
   },
   {
     id: "professor",
     name: "Professor",
-    selector: (row: any) => row.professor,
+    selector: (row: any) => row.professor.nome,
     sortable: true,
   },
   {
@@ -45,12 +45,12 @@ const columns = [
     sortable: false,
     right: true,
     grow: 0,
-    cell: () => (
+    cell: (props: any) => (
       <div className="flex gap-2">
         <Excluir
           title="Excluir Disciplina"
           description="Tem certeza que deseja excluir esse disciplina?"
-          onClick={() => (console.log("Excluiu Disciplina!"))}
+          onClick={() => deleteDepto(props.id)}
         />
         <button
           type="button"
@@ -63,6 +63,16 @@ const columns = [
   },
 ];
 
+const deleteDepto = async (id: number) => {
+  await fetch(`http://localhost:8080/api/disciplina/excluir/${id}`, {
+    method: "DELETE",
+  }).then((response) => {
+    console.log(response);
+    window.location.reload();
+  });
+};
+
+/*
 const data = [
   {
     id: 1,
@@ -81,9 +91,22 @@ const data = [
     periodo: "2022/2",
   },
 ];
+*/
 
 const Home: NextPage = () => {
   const [showCadastrar, setShowCadastrar] = useState(false);
+  const [disciplinas, setDisciplinas] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/disciplina/listar")
+      .then((response) => response.json())
+      .then((data) => {
+        setDisciplinas(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
 
   return (
     <Template
@@ -109,7 +132,7 @@ const Home: NextPage = () => {
         <div className="mt-8 overflow-x-auto animate-fade-in-up text-gray-700">
           <DataTable
             columns={columns}
-            data={data}
+            data={disciplinas}
             pagination
             paginationComponentOptions={paginationComponentOptions}
             highlightOnHover
