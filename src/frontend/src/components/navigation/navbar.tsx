@@ -2,6 +2,7 @@ import { HiAcademicCap, HiMenu, HiUserCircle, HiX } from "react-icons/hi";
 import { NavbarLinks } from "@utils/data";
 import { useState } from "react";
 import Link from "next/link";
+import Dropdown from "@components/elements/dropdown";
 
 export default function Navbar() {
   const [opened, setOpened] = useState(false);
@@ -27,7 +28,20 @@ export default function Navbar() {
             </div>
           </div>
           <div className="hidden lg:ml-6 lg:flex lg:items-center gap-4">
-            <HiUserCircle size={32} />
+            <Dropdown
+              id="account"
+              textColor="current"
+              textSize="lg"
+              options={[
+                {
+                  id: "sair",
+                  title: "Sair",
+                  href: "/autenticacao/login",
+                },
+              ]}
+            >
+              <HiUserCircle size={32} />
+            </Dropdown>
           </div>
           {/* Mobile menu button */}
           <div className="-mr-2 flex items-center lg:hidden">
@@ -55,10 +69,26 @@ export default function Navbar() {
                 <a className="block px-4 py-2 text-lg">{item.title}</a>
               </Link>
             ))}
-            <div className="p-4 inline-flex items-center justify-center gap-2">
+            <Dropdown
+              id="account"
+              textColor="current"
+              textSize="lg"
+              options={[
+                {
+                  id: "blog",
+                  title: "Blog",
+                  href: "/",
+                },
+                {
+                  id: "ajuda",
+                  title: "Central de Ajuda",
+                  href: "/",
+                },
+              ]}
+            >
               <HiUserCircle size={32} />
               <span>Perfil</span>
-            </div>
+            </Dropdown>
           </div>
         </section>
       )}
