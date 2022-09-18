@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiOutlinePencilAlt, HiOutlineBriefcase } from "react-icons/hi";
 /* templates */
 import { Meta } from "@templates/meta";
@@ -11,6 +11,7 @@ import DataTable from "react-data-table-component";
 import CadastrarProfessor from "@components/modal/form/professor";
 import { EmptyTable } from "@components/empty/table";
 import Excluir from "@components/modal/delete";
+import moment from "moment";
 
 const columns = [
   {
@@ -22,7 +23,9 @@ const columns = [
   {
     id: "nasc",
     name: "Data Nasc.",
-    selector: (row: any) => row.nasc,
+    selector: (row: any) => {
+      return moment(row.dataCriacao).format("DD-MM-YYYY");
+    },
     sortable: true,
   },
   {
@@ -60,7 +63,7 @@ const columns = [
     ),
   },
 ];
-
+/*
 const data = [
   {
     id: 1,
@@ -77,9 +80,25 @@ const data = [
     salario: "R$ 20.000,00",
   },
 ];
-
+*/
 const Home: NextPage = () => {
   const [showCadastrar, setShowCadastrar] = useState(false);
+  const [professores, setProfessores] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/professor/listar")
+      .then((response) => response.json())
+      .then((data) => {
+        data.map( (professor: any) => {
+          professor.departamento = professor.departamento.nome;
+        })
+        setProfessores(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
 
   return (
     <Template
@@ -104,7 +123,7 @@ const Home: NextPage = () => {
         <div className="mt-8 overflow-x-auto animate-fade-in-up text-gray-700">
           <DataTable
             columns={columns}
-            data={data}
+            data={professores}
             pagination
             paginationComponentOptions={paginationComponentOptions}
             highlightOnHover

@@ -6,6 +6,7 @@ import Input from "@components/form/input";
 import FooterModal from "../footer";
 import HeaderModal from "../header";
 import Modal from "../modal";
+import moment from "moment";
 import { Select } from "@components/form/select";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -36,8 +37,29 @@ const CadastrarAluno: React.FC<CadastrarAlunoProps> = ({ show, setShow }) => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
+
+    let response = await fetch(`http://localhost:8080/api/aluno/cadastrar`, {
+      method: "POST",
+      body: JSON.stringify({
+        nome: data.nome,
+        email: data.email,
+        matricula: data.matricula,
+        dataCriacao: moment().format("YYYY-MM-DD"),
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+
     setShow(false);
     reset();
   };

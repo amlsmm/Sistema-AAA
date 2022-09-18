@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React from "react";
 // components
 import Button from "@components/elements/button";
 import Input from "@components/form/input";
@@ -37,7 +37,7 @@ const CadastrarDepartamento: React.FC<CadastrarDepartamentoProps> = ({
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
-    await fetch(
+    let response = await fetch(
       `http://localhost:8080/api/departamento/cadastrar`,
       {
         method: "POST",
@@ -52,13 +52,13 @@ const CadastrarDepartamento: React.FC<CadastrarDepartamentoProps> = ({
       }
     )
       .then((response) => response.json())
-      .then(() => {
+      .then((data) => {
         window.location.reload();
       })
       .catch((err) => {
         console.log(err.message);
       });
-      reset();
+    reset();
     setShow(false);
   };
 
