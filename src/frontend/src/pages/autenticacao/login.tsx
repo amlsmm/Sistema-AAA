@@ -23,7 +23,7 @@ const Login = () => {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
     // signIn("credentials", { email, password });
-    router.push("/");
+    router.push("/admin");
   };
 
   const { data: session } = useSession();
@@ -33,7 +33,7 @@ const Login = () => {
 
   // Se não houver sessão, exibir a tela de Login
   /* if (session) {
-    return router.push("/"), [router], (<p>Redirecionando...</p>);
+    return router.push("/admin"), [router], (<p>Redirecionando...</p>);
   } */
 
   return (

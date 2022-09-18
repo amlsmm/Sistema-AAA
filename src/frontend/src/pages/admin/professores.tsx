@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import { HiOutlinePencilAlt, HiFolderOpen } from "react-icons/hi";
+import { HiOutlinePencilAlt, HiOutlineBriefcase } from "react-icons/hi";
 /* templates */
 import { Meta } from "@templates/meta";
 import { Template } from "@templates/template";
@@ -8,9 +8,12 @@ import { Template } from "@templates/template";
 import { paginationComponentOptions } from "@utils/table";
 /* components */
 import DataTable from "react-data-table-component";
-import CadastrarCurso from "@components/modal/form/curso";
+import CadastrarProfessor from "@components/modal/form/professor";
 import { EmptyTable } from "@components/empty/table";
 import Excluir from "@components/modal/delete";
+import moment from "moment";
+import { NavbarAdminLinks } from "@utils/data";
+import Navbar from "@components/navigation/navbar";
 
 const columns = [
   {
@@ -18,32 +21,39 @@ const columns = [
     name: "Nome",
     selector: (row: any) => row.nome,
     sortable: true,
-    width: "40%",
+  },
+  {
+    id: "nasc",
+    name: "Data Nasc.",
+    selector: (row: any) => {
+      return moment(row.dataCriacao).format("DD-MM-YYYY");
+    },
+    sortable: true,
   },
   {
     id: "depto",
     name: "Departamento",
     selector: (row: any) => row.departamento,
     sortable: true,
+    grow: 2,
   },
   {
-    id: "periodo",
-    name: "Período",
-    selector: (row: any) => row.periodo,
+    id: "salario",
+    name: "Salário",
+    selector: (row: any) => row.salario,
     sortable: true,
-    width: "15%",
   },
   {
     id: "acoes",
     sortable: false,
     right: true,
     grow: 0,
-    cell: (props: any) => (
+    cell: () => (
       <div className="flex gap-2">
         <Excluir
-          title="Excluir Curso"
-          description="Tem certeza que deseja excluir esse curso?"
-          onClick={() => (console.log("Excluiu curso!"))}
+          title="Excluir Professor"
+          description="Tem certeza que deseja excluir esse professor?"
+          onClick={() => (console.log("Excluiu Professor!"))}
         />
         <button
           type="button"
@@ -59,37 +69,38 @@ const columns = [
 const data = [
   {
     id: 1,
-    nome: "Ciência da Computação",
+    nome: "José Maria Silva",
+    nasc: "13/11/1960",
     departamento: "Departamento de Ciência da Computação",
-    periodo: "2022/2",
+    salario: "R$ 18.000,00",
   },
   {
     id: 2,
-    nome: "Sistemas de Informação",
+    nome: "Maria José Costa",
+    nasc: "29/01/1961",
     departamento: "Departamento de Ciência da Computação",
-    periodo: "2022/2",
+    salario: "R$ 20.000,00",
   },
 ];
 */
-
-
 const Home: NextPage = () => {
   const [showCadastrar, setShowCadastrar] = useState(false);
-  const [cursos, setCursos] = useState([]);
+  const [professores, setProfessores] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/curso/listar")
+    fetch("http://localhost:8080/api/professor/listar")
       .then((response) => response.json())
       .then((data) => {
-        data.map( (curso: any) => {
-          curso.departamento = curso.departamento.nome;
+        data.map( (professor: any) => {
+          professor.departamento = professor.departamento.nome;
         })
-        setCursos(data);
+        setProfessores(data);
       })
       .catch((err) => {
         console.log(err.message);
       });
   }, []);
+
 
   return (
     <Template
@@ -102,10 +113,11 @@ const Home: NextPage = () => {
         />
       }
     >
+      <Navbar links={NavbarAdminLinks} />
       <div className="container py-16">
         <div className="flex justify-between items-center">
-          <h2 className="text-gray-700">Cursos</h2>
-          <CadastrarCurso
+          <h2 className="text-gray-700">Professores</h2>
+          <CadastrarProfessor
             show={showCadastrar}
             setShow={setShowCadastrar}
           />
@@ -114,12 +126,12 @@ const Home: NextPage = () => {
         <div className="mt-8 overflow-x-auto animate-fade-in-up text-gray-700">
           <DataTable
             columns={columns}
-            data={cursos}
+            data={professores}
             pagination
             paginationComponentOptions={paginationComponentOptions}
             highlightOnHover
             pointerOnHover
-            noDataComponent={<EmptyTable title="Não há cursos cadastrados :(" description="Cadastre um curso no botão Cadastrar!" icon={HiFolderOpen} />}
+            noDataComponent={<EmptyTable title="Não há professores cadastrados :(" description="Cadastre um professor no botão Cadastrar!" icon={HiOutlineBriefcase} />}
           />
         </div>
       </div>
