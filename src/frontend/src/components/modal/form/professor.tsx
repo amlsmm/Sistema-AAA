@@ -7,39 +7,43 @@ import FooterModal from "../footer";
 import HeaderModal from "../header";
 import Modal from "../modal";
 import { Select } from "@components/form/select";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 export interface CadastrarProfessorProps {
   show: boolean;
   setShow(enabled: boolean): void;
 }
 
+type Inputs = {
+  nome: string;
+  dataNasc: string;
+  departamento: string;
+  salario: string;
+};
+
 const CadastrarProfessor: React.FC<CadastrarProfessorProps> = ({
   show,
   setShow,
 }) => {
-  const [nome, setNome] = useState("");
-  const [dataNasc, setDataNasc] = useState("");
   const [departamento, setDepartamento] = useState("");
-  const [salario, setSalario] = useState("");
-
-  function resetForm() {
-    setNome("");
-    setDataNasc("");
-    setDepartamento("");
-    setSalario("");
-  }
 
   function handleOpen() {
-    resetForm();
     setShow(true);
   }
 
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    console.log(nome, dataNasc, departamento, salario);
+  const {
+    setValue,
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Inputs>();
 
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
     setShow(false);
-  }
+    reset();
+  };
 
   return (
     <>
@@ -49,7 +53,7 @@ const CadastrarProfessor: React.FC<CadastrarProfessorProps> = ({
       {show && (
         <>
           <Modal>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <HeaderModal
                 title="Cadastrar Professor"
                 setClose={() => setShow(false)}
@@ -60,16 +64,20 @@ const CadastrarProfessor: React.FC<CadastrarProfessorProps> = ({
                   id="nome"
                   type="text"
                   placeholder="Digite o nome"
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
+                  errors={errors.nome?.message}
+                  {...register("nome", {
+                    required: "Obrigatório",
+                  })}
                 />
                 <Input
                   label="Data de Nascimento:"
                   id="dataNasc"
                   type="date"
                   placeholder="Digite a data"
-                  value={dataNasc}
-                  onChange={(e) => setDataNasc(e.target.value)}
+                  errors={errors.dataNasc?.message}
+                  {...register("dataNasc", {
+                    required: "Obrigatório",
+                  })}
                 />
                 <Select
                   label="Departamento:"
@@ -81,8 +89,12 @@ const CadastrarProfessor: React.FC<CadastrarProfessorProps> = ({
                     },
                     { id: "DCE", value: "Departamento de Ciências Exatas" },
                   ]}
-                  onClick={(e) => setDepartamento(e.currentTarget.id)}
+                  onClick={(e) => {
+                    setValue("departamento", e.currentTarget.id);
+                    setDepartamento(e.currentTarget.id);
+                  }}
                   selected={departamento}
+                  errors={errors.departamento?.message}
                 />
                 <Input
                   label="Salario:"
@@ -91,8 +103,10 @@ const CadastrarProfessor: React.FC<CadastrarProfessorProps> = ({
                   min="0"
                   step="1"
                   placeholder="Digite o salario"
-                  value={salario}
-                  onChange={(e) => setSalario(e.target.value)}
+                  errors={errors.salario?.message}
+                  {...register("salario", {
+                    required: "Obrigatório",
+                  })}
                 />
               </div>
               <FooterModal

@@ -13,6 +13,7 @@ export interface SelectProps extends HTMLAttributes<HTMLElement> {
   label: string;
   placeholder?: string;
   disabled?: boolean;
+  errors?: string;
 }
 
 export const Select: React.FC<SelectProps> = ({
@@ -21,6 +22,7 @@ export const Select: React.FC<SelectProps> = ({
   label,
   placeholder = "Selecione",
   disabled = false,
+  errors,
   ...rest
 }) => {
   const [isOpened, setIsOpened] = useState(false);
@@ -34,26 +36,30 @@ export const Select: React.FC<SelectProps> = ({
 
   return (
     <div className="w-full">
-      <h3 className={`block text-sm font-medium ${disabled ? 'text-gray-500' : 'text-gray-700'}`}>
+      <h3
+        className={`block text-sm font-medium ${
+          disabled ? "text-gray-500" : "text-gray-700"
+        }`}
+      >
         {label}
       </h3>
       <div className="relative mt-2">
         <button
           type="button"
-          className="px-3 py-3 text-gray-600 relative bg-white rounded-2xl text-sm border border-gray-300 outline-none focus:outline-none focus:border-primary w-full hover:border-gray-400 transition duration-200 text-left"
+          className={`px-3 py-3 text-gray-600 relative bg-white rounded-2xl text-sm border outline-none focus:outline-none w-full transition duration-200 text-left ${
+            errors
+              ? "border-danger"
+              : "border-gray-300 hover:border-gray-400 focus:border-primary"
+          }`}
           onClick={() => setIsOpened(!isOpened)}
           aria-haspopup="listbox"
           aria-expanded="true"
           aria-labelledby="listbox-label"
         >
           {selected !== "" ? (
-            <span className="block truncate">
-              {selectedOption}
-            </span>
+            <span className="block truncate">{selectedOption}</span>
           ) : (
-            <span className="block truncate text-gray-400">
-              {placeholder}
-            </span>
+            <span className="block truncate text-gray-400">{placeholder}</span>
           )}
           <span className="absolute inset-y-0 right-2 flex items-center 2pointer-events-none">
             <HiChevronDown className="w-4 h-4 stroke-current" />
@@ -78,9 +84,7 @@ export const Select: React.FC<SelectProps> = ({
                 aria-selected={selected === item.id}
                 {...rest}
               >
-                <span className="block font-normal truncate">
-                  {item.value}
-                </span>
+                <span className="block font-normal truncate">{item.value}</span>
               </li>
             ))}
           </ul>

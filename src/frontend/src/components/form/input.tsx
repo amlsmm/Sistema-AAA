@@ -11,11 +11,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => (
   <div className="w-full">
     <h3
       className={`block text-sm font-medium ${
-        props.disabled
-          ? "text-gray-500"
-          : props.errors
-          ? "text-danger"
-          : "text-gray-700"
+        props.disabled ? "text-gray-500" : "text-gray-700"
+        
       }`}
     >
       {props.label}
@@ -27,7 +24,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => (
         type={props.type}
         placeholder={props.placeholder}
         ref={ref}
-        className="px-3 py-3 placeholder-gray-400 text-gray-600 relative bg-white rounded-2xl text-sm border border-gray-300 outline-none focus:outline-none focus:border-primary w-full hover:border-gray-400 transition duration-200"
+        className={`px-3 py-3 placeholder-gray-400 text-gray-600 relative bg-white rounded-2xl text-sm border outline-none focus:outline-none w-full transition duration-200 ${props.errors ? 'border-danger' : 'border-gray-300 hover:border-gray-400 focus:border-primary'}`}
         {...props}
       />
     </div>
