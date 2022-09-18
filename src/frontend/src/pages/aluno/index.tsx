@@ -101,8 +101,8 @@ const Home: NextPage = () => {
               </p>
               <br />
               <Button variant="outline">
-                <Link href="/aluno/dados-pessoais">
-                  <a>Dados Pessoais</a>
+                <Link href="/aluno/perfil">
+                  <a>Perfil</a>
                 </Link>
               </Button>
             </div>
