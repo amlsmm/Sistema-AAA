@@ -49,7 +49,7 @@ const Button: React.FC<ButtonProps> = ({
             ? "py-2 px-6"
             : spacing == "large"
             ? "py-3 px-10"
-            : "py-3 px-8"
+            : "py-2.5 px-5"
         } ${
           disabled ? "bg-gray-500" : "hover:opacity-90"
         } ${style} inline-flex items-center justify-center border font-bold rounded-full shadow-sm focus:outline-none transition duration-300`}

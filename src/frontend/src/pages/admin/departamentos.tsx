@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import { HiOutlinePencilAlt, HiOutlineTrash, HiOutlineUserGroup } from "react-icons/hi";
+import { HiOutlinePencilAlt, HiOfficeBuilding } from "react-icons/hi";
 /* templates */
 import { Meta } from "@templates/meta";
 import { Template } from "@templates/template";
@@ -8,29 +8,33 @@ import { Template } from "@templates/template";
 import { paginationComponentOptions } from "@utils/table";
 /* components */
 import DataTable from "react-data-table-component";
-import CadastrarAluno from "@components/modal/form/aluno";
+import CadastrarDepartamento from "@components/modal/form/departamento";
 import { EmptyTable } from "@components/empty/table";
 import Excluir from "@components/modal/delete";
+import moment from "moment";
+import Navbar from "@components/navigation/navbar";
+import { NavbarAdminLinks } from "@utils/data";
 
 const columns = [
   {
-    id: "matricula",
-    name: "Matrícula",
-    selector: (row: any) => row.matricula,
+    id: "data",
+    name: "Data Criação",
+    selector: (row: any) => {
+      return moment(row.dataCriacao).format("DD-MM-YYYY");
+    },
     sortable: true,
-    width: "20%",
   },
   {
     id: "nome",
     name: "Nome",
     selector: (row: any) => row.nome,
     sortable: true,
-    width: "30%",
+    width: "50%",
   },
   {
-    id: "email",
-    name: "E-mail",
-    selector: (row: any) => row.email,
+    id: "sigla",
+    name: "Sigla",
+    selector: (row: any) => row.sigla,
     sortable: true,
   },
   {
@@ -40,17 +44,10 @@ const columns = [
     grow: 0,
     cell: (props: any) => (
       <div className="flex gap-2">
-        <button
-          type="button"
-          className="text-danger p-1 hover:bg-gray-50 rounded-full transition duration-200"
-          onClick={() => deleteAluno(props.id)}
-        >
-          <HiOutlineTrash size={18} />
-        </button>
         <Excluir
-          title="Excluir Aluno"
-          description="Tem certeza que deseja excluir esse aluno?"
-          onClick={() => (console.log("Excluiu Aluno!"))}
+          title="Excluir Departamento"
+          description="Tem certeza que deseja excluir esse departamento?"
+          onClick={() => deleteDepto(props.id)}
         />
         <button
           type="button"
@@ -62,49 +59,38 @@ const columns = [
     ),
   },
 ];
-
+/*
 const data = [
   {
     id: 1,
-    matricula: "201920584",
-    nome: "Sandra Carvalho",
-    email: "sandra.carvalho@estudante.ufla.br",
+    data: "22/08/2015",
+    nome: "Departamento de Ciência da Computação",
+    sigla: "DCC",
   },
-  {
-    id: 2,
-    matricula: "201820584",
-    nome: "Marcos Vilela",
-    email: "marcos.vilela@estudante.ufla.br",
-  },
-  {
-    id: 3,
-    matricula: "201929584",
-    nome: "Camila Rodrigues",
-    email: "camila.rodrigues@estudante.ufla.br",
-  },
+  ...
 ];
-
-const deleteAluno = async (id: number) => {
-  await fetch(`http://localhost:8080/api/aluno/excluir/${id}`, {
-     method: 'DELETE',
+*/
+const deleteDepto = async (id: number) => {
+  await fetch(`http://localhost:8080/api/departamento/excluir/${id}`, {
+    method: "DELETE",
   }).then((response) => {
-    console.log(response)
+    console.log(response);
     window.location.reload();
   });
 };
 
 const Home: NextPage = () => {
   const [showCadastrar, setShowCadastrar] = useState(false);
-  const [alunos, setAlunos] = useState([]);
+  const [deptos, setDeptos] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/aluno/listar')
+    fetch("http://localhost:8080/api/departamento/listar")
       .then((response) => response.json())
       .then((data) => {
-        setAlunos(data);
+        setDeptos(data);
       })
       .catch((err) => {
-        console.log(err.message)
+        console.log(err.message);
       });
   }, []);
 
@@ -119,10 +105,11 @@ const Home: NextPage = () => {
         />
       }
     >
+      <Navbar links={NavbarAdminLinks} />
       <div className="container py-16">
         <div className="flex justify-between items-center">
-          <h2 className="text-gray-700">Alunos</h2>
-          <CadastrarAluno
+          <h2 className="text-gray-700">Departamentos</h2>
+          <CadastrarDepartamento
             show={showCadastrar}
             setShow={setShowCadastrar}
           />
@@ -131,12 +118,18 @@ const Home: NextPage = () => {
         <div className="mt-8 overflow-x-auto animate-fade-in-up text-gray-700">
           <DataTable
             columns={columns}
-            data={alunos}
+            data={deptos}
             pagination
             paginationComponentOptions={paginationComponentOptions}
             highlightOnHover
             pointerOnHover
-            noDataComponent={<EmptyTable title="Não há alunos cadastrados :(" description="Cadastre um aluno no botão Cadastrar!" icon={HiOutlineUserGroup} />}
+            noDataComponent={
+              <EmptyTable
+                title="Não há departamentos cadastrados :("
+                description="Cadastre um departamento no botão Cadastrar!"
+                icon={HiOfficeBuilding}
+              />
+            }
           />
         </div>
       </div>
