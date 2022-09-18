@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React from "react";
 // components
 import Button from "@components/elements/button";
 import Input from "@components/form/input";
@@ -7,6 +7,7 @@ import FooterModal from "../footer";
 import HeaderModal from "../header";
 import Modal from "../modal";
 
+import { useForm, SubmitHandler } from "react-hook-form";
 import moment from "moment";
 
 export interface CadastrarDepartamentoProps {
@@ -14,65 +15,62 @@ export interface CadastrarDepartamentoProps {
   setShow(enabled: boolean): void;
 }
 
+type Inputs = {
+  nome: string;
+  sigla: string;
+};
+
 const CadastrarDepartamento: React.FC<CadastrarDepartamentoProps> = ({
   show,
   setShow,
 }) => {
-  const [nome, setNome] = useState("");
-  const [sigla, setSigla] = useState("");
-
-  function resetForm() {
-    setNome("");
-    setSigla("");
-  }
-
   function handleOpen() {
-    resetForm();
     setShow(true);
   }
 
-  const addDepartamento = async (nome: string, sigla: string) => {
-    let response = await fetch(`http://localhost:8080/api/departamento/cadastrar`, {
-       method: 'POST',
-       body: JSON.stringify({
-          nome: nome,
-          sigla: sigla,
-          dataCriacao: moment().format("YYYY-MM-DD")
-       }),
-       headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-       },
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      setNome('');
-      setSigla('');
-      window.location.reload();
-    })
-    .catch((err) => {
-      console.log(err.message);
-    })
- };
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Inputs>();
 
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    addDepartamento(nome, sigla);
-
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    console.log(data);
+    let response = await fetch(
+      `http://localhost:8080/api/departamento/cadastrar`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          nome: data.nome,
+          sigla: data.sigla,
+          dataCriacao: moment().format("YYYY-MM-DD"),
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+    reset();
     setShow(false);
-  }
+  };
 
   return (
     <>
-      <Button
-        variant="primary"
-        onClick={handleOpen}
-      >
+      <Button variant="primary" onClick={handleOpen}>
         Cadastrar
       </Button>
       {show && (
         <>
           <Modal>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <HeaderModal
                 title="Cadastrar Departamento"
                 setClose={() => setShow(false)}
@@ -83,16 +81,20 @@ const CadastrarDepartamento: React.FC<CadastrarDepartamentoProps> = ({
                   id="nome"
                   type="text"
                   placeholder="Digite o nome"
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
+                  errors={errors.nome?.message}
+                  {...register("nome", {
+                    required: "Obrigatório",
+                  })}
                 />
                 <Input
                   label="Sigla:"
                   id="sigla"
                   type="text"
                   placeholder="Digite a sigla"
-                  value={sigla}
-                  onChange={(e) => setSigla(e.target.value)}
+                  errors={errors.sigla?.message}
+                  {...register("sigla", {
+                    required: "Obrigatório",
+                  })}
                 />
               </div>
               <FooterModal

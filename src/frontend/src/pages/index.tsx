@@ -1,6 +1,7 @@
 import Card from "@components/cards/card";
 import { Cards } from "@utils/data";
 import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import { Meta } from "../templates/meta";
 import { Template } from "../templates/template";
 

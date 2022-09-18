@@ -8,7 +8,7 @@ import { Template } from "@templates/template";
 import { paginationComponentOptions } from "@utils/table";
 /* components */
 import DataTable from "react-data-table-component";
-import CadastrarDisciplina from "@components/modal/cadastrar/disciplina";
+import CadastrarDisciplina from "@components/modal/form/disciplina";
 import { EmptyTable } from "@components/empty/table";
 import Excluir from "@components/modal/delete";
 
