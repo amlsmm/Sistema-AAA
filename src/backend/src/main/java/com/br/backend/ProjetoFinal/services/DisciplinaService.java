@@ -44,4 +44,12 @@ public class DisciplinaService {
         return matriculaRepository.save(matricula);
     }
 
+    public List<Matricula> listarMatriculas(){
+        return matriculaRepository.findAll();
+    }
+
+    public void excluirMatricula(Long id){
+        matriculaRepository.deleteById(id);
+    }
+
 }

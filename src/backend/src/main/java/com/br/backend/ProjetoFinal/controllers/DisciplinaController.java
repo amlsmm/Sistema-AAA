@@ -52,10 +52,26 @@ public class DisciplinaController {
         }
     }
 
+    @GetMapping(path = "/listar")
+    public ResponseEntity<List<Matricula>> listarMatriculas(){
+        List<Matricula> matriculas = disciplinaService.listarMatriculas();
+        return ResponseEntity.ok().body(matriculas);
+    }
+
     @PostMapping(path = "/matricular")
     public ResponseEntity<Matricula> matricular(@RequestBody Disciplina disciplina,
                                                 @RequestBody Aluno aluno){
         return ResponseEntity.ok().body(disciplinaService.matricular(aluno, disciplina));
+    }
+
+    @DeleteMapping(path = "/matricula/excluir/{id}")
+    public ResponseEntity<HttpStatus> excluirMatricula(@PathVariable Long id){
+        try{
+            disciplinaService.excluirMatricula(id);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
