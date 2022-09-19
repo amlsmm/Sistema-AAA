@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.br.backend.ProjetoFinal.entities.Aluno;
 import com.br.backend.ProjetoFinal.entities.Disciplina;
+import com.br.backend.ProjetoFinal.entities.Matricula;
 import com.br.backend.ProjetoFinal.services.DisciplinaService;
 
 @RestController
@@ -48,7 +50,12 @@ public class DisciplinaController {
         }catch(Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
+    }
+
+    @PostMapping(path = "/matricular")
+    public ResponseEntity<Matricula> matricular(@RequestBody Disciplina disciplina,
+                                                @RequestBody Aluno aluno){
+        return ResponseEntity.ok().body(disciplinaService.matricular(aluno, disciplina));
     }
 
 }

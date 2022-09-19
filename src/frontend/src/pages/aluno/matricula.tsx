@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiOutlinePencilAlt, HiOutlineBookOpen } from "react-icons/hi";
 /* templates */
 import { Meta } from "@templates/meta";
@@ -31,17 +31,17 @@ const columns = [
   {
     id: "depto",
     name: "Departamento",
-    selector: (row: any) => row.departamento,
+    selector: (row: any) => row.departamento.nome,
     sortable: true,
   },
   {
     id: "professor",
     name: "Professor",
-    selector: (row: any) => row.professor,
+    selector: (row: any) => row.professor.nome,
     sortable: true,
   },
 ];
-
+/*
 const data = [
   {
     id: 1,
@@ -60,9 +60,23 @@ const data = [
     periodo: "2022/2",
   },
 ];
+*/
 
 const Home: NextPage = () => {
   const [selectedRows, setSelectedRows] = useState([]);
+  const [disciplinas, setDisciplinas] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/disciplina/listar")
+      .then((response) => response.json())
+      .then((data) => {
+        setDisciplinas(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
 
   const handleChange = ({ selectedRows }: any) => {
     setSelectedRows(selectedRows);
@@ -91,7 +105,7 @@ const Home: NextPage = () => {
           <div className="card-white overflow-x-auto animate-fade-in-up text-gray-700">
             <DataTable
               columns={columns}
-              data={data}
+              data={disciplinas}
               pagination
               paginationComponentOptions={paginationComponentOptions}
               highlightOnHover

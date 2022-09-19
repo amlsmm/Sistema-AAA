@@ -24,7 +24,7 @@ const columns = [
   },
   {
     id: "curso",
-    nome: "Curso",
+    name: "Curso",
     selector: (row: any) => row.curso.nome,
     sortable: true,
     width: "25%"

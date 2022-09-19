@@ -11,6 +11,7 @@ import { Template } from "../../templates/template";
 /* utils */
 import { paginationComponentOptions } from "@utils/table";
 import { EmptyTable } from "@components/empty/table";
+import { useEffect, useState } from "react";
 
 const columns = [
   {
@@ -29,7 +30,7 @@ const columns = [
   {
     id: "professor",
     name: "Professor",
-    selector: (row: any) => row.professor,
+    selector: (row: any) => row.professor.nome,
     sortable: true,
   },
 ];
@@ -44,6 +45,19 @@ const data = [
 ];
 
 const Home: NextPage = () => {
+  const [disciplinas, setDisciplinas] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/disciplina/listar")
+      .then((response) => response.json())
+      .then((data) => {
+        setDisciplinas(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
   return (
     <Template
       meta={
@@ -73,7 +87,7 @@ const Home: NextPage = () => {
             <br />
             <DataTable
               columns={columns}
-              data={data}
+              data={disciplinas}
               pagination
               paginationComponentOptions={paginationComponentOptions}
               highlightOnHover
