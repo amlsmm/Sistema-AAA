@@ -20,6 +20,7 @@
       "@components/*": ["src/components/*"],
       "@templates/*": ["src/templates/*"],
       "@utils/*": ["src/utils/*"],
+      "@helpers/*": ["src/helpers/*"],
       "@api/*": ["src/pages/api/*"],
       "@styles/*": ["src/styles/*"],
       "@img/*": ["public/img/*"],

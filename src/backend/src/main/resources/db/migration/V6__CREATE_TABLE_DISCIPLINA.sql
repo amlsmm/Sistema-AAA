@@ -2,7 +2,7 @@ CREATE TABLE SISTEMA_AAA.disciplina (
     id INTEGER NOT NULL AUTO_INCREMENT,
     id_departamento INTEGER NOT NULL,
     id_professor INTEGER NOT NULL,
-    codigo VARCHAR(6),
+    codigo VARCHAR(7),
     nome VARCHAR(100),
     
     CONSTRAINT pk_disciplina PRIMARY KEY (id),

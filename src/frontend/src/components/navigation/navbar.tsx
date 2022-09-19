@@ -1,9 +1,19 @@
 import { HiAcademicCap, HiMenu, HiUserCircle, HiX } from "react-icons/hi";
-import { NavbarLinks } from "@utils/data";
 import { useState } from "react";
 import Link from "next/link";
+import Dropdown from "@components/elements/dropdown";
 
-export default function Navbar() {
+export interface NavbarLinkProps {
+  id: string;
+  title: string;
+  href: string;
+}
+
+export interface NavbarProps {
+  links: NavbarLinkProps[];
+}
+
+const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const [opened, setOpened] = useState(false);
 
   return (
@@ -17,7 +27,7 @@ export default function Navbar() {
               <HiAcademicCap size={32} />
             </div>
             <div className="hidden lg:ml-6 lg:flex lg:items-center">
-              {NavbarLinks.map((item) => (
+              {links.map((item) => (
                 <Link href={item.href} key={item.id}>
                   <a className="h-full inline-flex items-center py-2 px-4">
                     {item.title}
@@ -27,7 +37,20 @@ export default function Navbar() {
             </div>
           </div>
           <div className="hidden lg:ml-6 lg:flex lg:items-center gap-4">
-            <HiUserCircle size={32} />
+            <Dropdown
+              id="account"
+              textColor="current"
+              textSize="lg"
+              options={[
+                {
+                  id: "sair",
+                  title: "Sair",
+                  href: "/autenticacao/login",
+                },
+              ]}
+            >
+              <HiUserCircle size={32} />
+            </Dropdown>
           </div>
           {/* Mobile menu button */}
           <div className="-mr-2 flex items-center lg:hidden">
@@ -50,18 +73,31 @@ export default function Navbar() {
       {opened && (
         <section className="lg:hidden bg-white shadow-lg py-8 text-gray-700 animate-fade-in">
           <div className="space-y-1 px-2 font-bold">
-            {NavbarLinks.map((item) => (
+            {links.map((item) => (
               <Link href={item.href} key={item.id}>
                 <a className="block px-4 py-2 text-lg">{item.title}</a>
               </Link>
             ))}
-            <div className="p-4 inline-flex items-center justify-center gap-2">
+            <Dropdown
+              id="account"
+              textColor="current"
+              textSize="lg"
+              options={[
+                {
+                  id: "sair",
+                  title: "Sair",
+                  href: "/autenticacao/login",
+                },
+              ]}
+            >
               <HiUserCircle size={32} />
               <span>Perfil</span>
-            </div>
+            </Dropdown>
           </div>
         </section>
       )}
     </nav>
   );
 }
+
+export default Navbar;

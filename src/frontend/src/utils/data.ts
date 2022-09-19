@@ -6,36 +6,49 @@ import {
     HiOutlineUserGroup,
   } from "react-icons/hi";
     
-  export const NavbarLinks = [
+  export const NavbarAdminLinks = [
     {
       id: "home",
       title: "Dashboard",
-      href: "/",
+      href: "/admin",
     },
     {
       id: "departamentos",
       title: "Departamentos",
-      href: "/departamentos",
+      href: "/admin/departamentos",
     },
     {
       id: "cursos",
       title: "Cursos",
-      href: "/cursos",
+      href: "/admin/cursos",
     },
     {
       id: "disciplinas",
       title: "Disciplinas",
-      href: "/disciplinas",
+      href: "/admin/disciplinas",
     },
     {
       id: "professores",
       title: "Professores",
-      href: "/professores",
+      href: "/admin/professores",
     },
     {
       id: "alunos",
       title: "Alunos",
-      href: "/alunos",
+      href: "/admin/alunos",
+    },
+  ];
+
+  export const NavbarAlunoLinks = [
+    {
+      id: "home",
+      title: "Dashboard",
+      href: "/aluno",
+    },
+    {
+      id: "disciplinas",
+      title: "Disciplinas",
+      href: "/aluno/disciplinas",
     },
   ];
   
@@ -44,31 +57,31 @@ import {
       id: "departamento",
       title: "Departamentos",
       icon: HiOutlineOfficeBuilding,
-      href: "/departamentos",
+      href: "/admin/departamentos",
     },
     {
       id: "curso",
       title: "Cursos",
       icon: HiOutlineFolderOpen,
-      href: "/cursos",
+      href: "/admin/cursos",
     },
     {
       id: "disciplina",
       title: "Disciplinas",
       icon: HiOutlineBookOpen,
-      href: "/disciplinas",
+      href: "/admin/disciplinas",
     },
     {
       id: "professor",
       title: "Professores",
       icon: HiOutlineBriefcase,
-      href: "/professores",
+      href: "/admin/professores",
     },
     {
       id: "aluno",
       title: "Alunos",
       icon: HiOutlineUserGroup,
-      href: "/alunos",
+      href: "/admin/alunos",
     },
   ];
   

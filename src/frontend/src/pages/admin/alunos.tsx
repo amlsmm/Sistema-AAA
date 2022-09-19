@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
-import { useState } from "react";
-import { HiOutlinePencilAlt, HiOutlineUserGroup } from "react-icons/hi";
+import { useEffect, useState } from "react";
+import { HiOutlinePencilAlt, HiOutlineTrash, HiOutlineUserGroup } from "react-icons/hi";
 /* templates */
 import { Meta } from "@templates/meta";
 import { Template } from "@templates/template";
@@ -8,9 +8,11 @@ import { Template } from "@templates/template";
 import { paginationComponentOptions } from "@utils/table";
 /* components */
 import DataTable from "react-data-table-component";
-import CadastrarAluno from "@components/modal/cadastrar/aluno";
+import CadastrarAluno from "@components/modal/form/aluno";
 import { EmptyTable } from "@components/empty/table";
 import Excluir from "@components/modal/delete";
+import Navbar from "@components/navigation/navbar";
+import { NavbarAdminLinks } from "@utils/data";
 
 const columns = [
   {
@@ -18,7 +20,14 @@ const columns = [
     name: "Matrícula",
     selector: (row: any) => row.matricula,
     sortable: true,
-    width: "20%",
+    width: "15%",
+  },
+  {
+    id: "curso",
+    name: "Curso",
+    selector: (row: any) => row.curso.nome,
+    sortable: true,
+    width: "25%"
   },
   {
     id: "nome",
@@ -38,12 +47,12 @@ const columns = [
     sortable: false,
     right: true,
     grow: 0,
-    cell: () => (
+    cell: (props: any) => (
       <div className="flex gap-2">
         <Excluir
           title="Excluir Aluno"
           description="Tem certeza que deseja excluir esse aluno?"
-          onClick={() => (console.log("Excluiu Aluno!"))}
+          onClick={() => deleteAluno(props.id)}
         />
         <button
           type="button"
@@ -56,6 +65,7 @@ const columns = [
   },
 ];
 
+/*
 const data = [
   {
     id: 1,
@@ -76,9 +86,31 @@ const data = [
     email: "camila.rodrigues@estudante.ufla.br",
   },
 ];
+*/
+
+const deleteAluno = async (id: number) => {
+  await fetch(`http://localhost:8080/api/aluno/excluir/${id}`, {
+     method: 'DELETE',
+  }).then((response) => {
+    console.log(response)
+    window.location.reload();
+  });
+};
 
 const Home: NextPage = () => {
   const [showCadastrar, setShowCadastrar] = useState(false);
+  const [alunos, setAlunos] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/api/aluno/listar')
+      .then((response) => response.json())
+      .then((data) => {
+        setAlunos(data);
+      })
+      .catch((err) => {
+        console.log(err.message)
+      });
+  }, []);
 
   return (
     <Template
@@ -91,6 +123,7 @@ const Home: NextPage = () => {
         />
       }
     >
+      <Navbar links={NavbarAdminLinks} />
       <div className="container py-16">
         <div className="flex justify-between items-center">
           <h2 className="text-gray-700">Alunos</h2>
@@ -103,7 +136,7 @@ const Home: NextPage = () => {
         <div className="mt-8 overflow-x-auto animate-fade-in-up text-gray-700">
           <DataTable
             columns={columns}
-            data={data}
+            data={alunos}
             pagination
             paginationComponentOptions={paginationComponentOptions}
             highlightOnHover
