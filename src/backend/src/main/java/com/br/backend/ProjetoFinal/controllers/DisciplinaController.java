@@ -52,7 +52,7 @@ public class DisciplinaController {
         }
     }
 
-    @GetMapping(path = "/listar")
+    @GetMapping(path = "/listar/matriculas")
     public ResponseEntity<List<Matricula>> listarMatriculas(){
         List<Matricula> matriculas = disciplinaService.listarMatriculas();
         return ResponseEntity.ok().body(matriculas);
