@@ -1,0 +1,30 @@
+"Test suite name","Teste Sistema AAA"
+"Created on","2022-09-19 21:19:48 UTC"
+"Updated on","2022-09-19 21:38:50 UTC"
+
+
+"Id","Section","Test case number","Title","Description","Test steps","Expected result","Created at","Updated at"
+"3707989","Testes de Validação","TC01","Criar Departamento","Validar se é possível cadastrar um novo departamento","1- Acessar a tela de listagem de departamentos em http://localhost:3000/admin/departamentos;
+2 - Clicar no botão de cadastrar;
+3 - Preencher os campos de Nome, Sigla;
+4 - Clicar no botão de Salvar;
+
+
+- Fluxos Alternativos:
+O novo departamento não é criado é a página não será recarregada.","É esperado que a página recarregue e aprece na lista o novo departamento cadastrado;","2022-09-19 21:24:05 UTC","2022-09-19 21:25:25 UTC"
+"3707999","Testes de Validação","TC02","Remover Departamento","Seleciona um departamento listado é o remove","1 - Acessar a lista de departamentos em: http://localhost:3000/admin/departamentos;
+2 - Selecionar o departamento que se deseja excluir;
+3 - Clicar na lixeira  do departamento selecionado;
+4 - Confirmar a remoção no modal;
+5 - Clicar no botão ""Excluir"";
+6 - A página será recarregada ;
+
+Fluxo Alternativo
+Após o carregamento, caso a remoção não tenha ocorrido, o departamento continuará listado.","Caso a remoção tenha sido bem sucedida, após o carregamento da página o departamento selecionado erá sido removido da lista.","2022-09-19 21:32:37 UTC","2022-09-19 21:32:37 UTC"
+"3708003","Testes de Validação","TC03","Listar Professores","Acessar a lista de professores cadastrados","1- Acessar o seguinte endereço: http://localhost:3000/admin/professores;
+2 - A lista de professores cadastrados será exibida na tela;
+
+Fluxo Alternativo
+Caso ocorra algum erro, será exibido no centro da tela a seguinte mensagem: 
+""Não há professores cadastrados :(
+Cadastre um professor no botão Cadastrar!""","Caso não ocorra nenhum erro, a lista dos professores deverá aparecer na tela listando Nome, Data De Nascimento, Departamento e Salário, de cada professor e permitindo ordenar a lista por cada um desses atributos.","2022-09-19 21:36:58 UTC","2022-09-19 21:36:58 UTC"

@@ -26,7 +26,7 @@ class ProjetoFinalApplicationTests {
 	private DepartamentoController departamentoController;
 
 	/*
-	 * Esse teste unitário cdastra um objeto "departamento" e chama método cadastrar para verificar
+	 * Esse teste unitário cadastra um objeto "departamento" e chama método cadastrar para verificar
 	 * se o objeto cadastrado no banco possui os mesmos valores que o objeto criado
 	 */
 	@Test
