@@ -1,6 +1,6 @@
 <h1 align="center">PROJETO FINAL</h1>
 <p align="center">
-  Projeto final da disciplina de Engenharia de Software GCC-218, cursada no período 2022/1.
+  Projeto final da disciplina de Engenharia de Software GCC-188, cursada no período 2022/1.
 </p>
 
 ---
