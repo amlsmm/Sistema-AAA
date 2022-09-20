@@ -9,6 +9,7 @@
 - [Descrição](#descrição)
 - [Tecnologias e Versões](#tecnologias-e-versões)
 - [Regras de Uso do Git](#regras-de-uso-do-git)
+- [Regras, padrões e boa práticas de desenvolvimento](#regras-padrões-e-boa-práticas-de-desenvolvimento)
 
 ---
 ## Descrição
@@ -19,6 +20,11 @@
   o coordenador poderá acessar o sistema para: gerenciar professores, destacar professores para disciplinas e gerenciar departamentos. E o aluno poderá acessar o sistema para: se cadastrar em uma disciplina e acessar seus dados pessoais.
 
 ---
+
+## Desenvolvedores
+ - Ana Beatriz Torres
+ - André Marçal Medeiros
+ - Antônio Marques
 ## Tecnologias e Versões
 
 ### Front End:
@@ -31,6 +37,7 @@
 ### Back End:
 
 ![Spring](https://img.shields.io/badge/spring-v2.7.0-%2320232a.svg?style=for-the-badge&logo=spring&logoColor=white)
+![Java](https://img.shields.io/badge/Java-v11.0.16-%2320232a?style=for-the-badge&logo=java&logoColor=white)
 
 ### Data Base:
 
