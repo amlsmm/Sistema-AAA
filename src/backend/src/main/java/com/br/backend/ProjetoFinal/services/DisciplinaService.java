@@ -37,6 +37,11 @@ public class DisciplinaService {
         disciplinaRepository.deleteById(id);
     }
 
+    public Disciplina editar(Long id, Disciplina disciplina){
+        disciplina.setId(id);
+        return disciplinaRepository.save(disciplina);
+    }
+
     public Matricula matricular(Aluno aluno, Disciplina disciplina){
         Matricula matricula = new Matricula();
         matricula.setAluno(aluno);
