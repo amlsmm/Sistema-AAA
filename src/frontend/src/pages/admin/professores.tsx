@@ -56,7 +56,7 @@ const columns = [
           description="Tem certeza que deseja excluir esse professor?"
           onClick={() => (deleteProfessor(props.id))}
         />
-        <AddEditProfessor editData={props} />
+        {/* <AddEditProfessor editData={props} /> */}
       </div>
     ),
   },

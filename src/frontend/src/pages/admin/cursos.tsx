@@ -48,7 +48,7 @@ const columns = [
           description="Tem certeza que deseja excluir esse curso?"
           onClick={() => deleteCurso(props.id)}
         />
-        <AddEditCurso editData={props} />
+        {/* <AddEditCurso editData={props} /> */}
       </div>
     ),
   },
