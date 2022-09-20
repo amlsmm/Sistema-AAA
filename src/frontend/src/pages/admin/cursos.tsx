@@ -13,6 +13,7 @@ import { EmptyTable } from "@components/empty/table";
 import Excluir from "@components/modal/delete";
 import Navbar from "@components/navigation/navbar";
 import { NavbarAdminLinks } from "@utils/data";
+import AddEditCurso from "@components/modal/form/curso";
 
 const columns = [
   {
@@ -45,14 +46,9 @@ const columns = [
         <Excluir
           title="Excluir Curso"
           description="Tem certeza que deseja excluir esse curso?"
-          onClick={() => (deleteCurso(props.id))}
+          onClick={() => deleteCurso(props.id)}
         />
-        <button
-          type="button"
-          className="text-primary p-1 hover:bg-gray-50 rounded-full transition duration-200"
-        >
-          <HiOutlinePencilAlt size={18} />
-        </button>
+        {/* <AddEditCurso editData={props} /> */}
       </div>
     ),
   },
@@ -83,18 +79,16 @@ const data = [
 ];
 */
 
-
 const Home: NextPage = () => {
-  const [showCadastrar, setShowCadastrar] = useState(false);
   const [cursos, setCursos] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:8080/api/curso/listar")
       .then((response) => response.json())
       .then((data) => {
-        data.map( (curso: any) => {
+        data.map((curso: any) => {
           curso.departamento = curso.departamento.nome;
-        })
+        });
         setCursos(data);
       })
       .catch((err) => {
@@ -117,10 +111,7 @@ const Home: NextPage = () => {
       <div className="container py-16">
         <div className="flex justify-between items-center">
           <h2 className="text-gray-700">Cursos</h2>
-          <CadastrarCurso
-            show={showCadastrar}
-            setShow={setShowCadastrar}
-          />
+          <AddEditCurso />
         </div>
 
         <div className="mt-8 overflow-x-auto animate-fade-in-up text-gray-700">
@@ -131,7 +122,13 @@ const Home: NextPage = () => {
             paginationComponentOptions={paginationComponentOptions}
             highlightOnHover
             pointerOnHover
-            noDataComponent={<EmptyTable title="Não há cursos cadastrados :(" description="Cadastre um curso no botão Cadastrar!" icon={HiFolderOpen} />}
+            noDataComponent={
+              <EmptyTable
+                title="Não há cursos cadastrados :("
+                description="Cadastre um curso no botão Cadastrar!"
+                icon={HiFolderOpen}
+              />
+            }
           />
         </div>
       </div>

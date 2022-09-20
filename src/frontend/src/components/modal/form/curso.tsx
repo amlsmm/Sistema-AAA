@@ -1,4 +1,6 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import Button from "@components/elements/button";
 import Input from "@components/form/input";
@@ -8,19 +10,36 @@ import HeaderModal from "../header";
 import Modal from "../modal";
 import { Select } from "@components/form/select";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { HiOutlinePencilAlt } from "react-icons/hi";
 
-export interface CadastrarCursoProps {
-  show: boolean;
-  setShow(enabled: boolean): void;
+export interface AddEditCursoProps {
+  editData?: Inputs;
 }
 
 type Inputs = {
+  id?: number;
   nome: string;
   departamento: string;
   periodo: string;
 };
 
-const CadastrarCurso: React.FC<CadastrarCursoProps> = ({ show, setShow }) => {
+const AddEditCurso: React.FC<AddEditCursoProps> = ({ editData }) => {
+  const [show, setShow] = useState(false);
+
+  function handleEditOpen() {
+    setShow(true);
+    console.log(editData);
+
+    setValue("nome", editData?.nome ? editData.nome : "");
+    setDepartamento(editData?.departamento ? editData.departamento : "");
+    setPeriodo(editData?.periodo ? editData.periodo : "");
+  }
+
+  function handleClose() {
+    setShow(false);
+    reset();
+  }
+
   const [departamento, setDepartamento] = useState("");
   const [periodo, setPeriodo] = useState("");
   const [deptos, setDeptos] = useState<any>([]);
@@ -40,9 +59,11 @@ const CadastrarCurso: React.FC<CadastrarCursoProps> = ({ show, setShow }) => {
       });
   }, []);
 
-  function handleOpen() {
-    setShow(true);
-  }
+  const schema = yup.object({
+    nome: yup.string().required("Campo obrigatório"),
+    departamento: yup.string().required("Campo obrigatório"),
+    periodo: yup.string().required("Campo obrigatório"),
+  });
 
   const {
     setValue,
@@ -50,11 +71,22 @@ const CadastrarCurso: React.FC<CadastrarCursoProps> = ({ show, setShow }) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
 
+    editData !== undefined
+      ? editCurso(editData.id ? editData.id : 0, data)
+      : addCurso(data);
+
+    setShow(false);
+    reset();
+  };
+
+  const addCurso = async (data: Inputs) => {
     var departamento = deptos.filter((obj: any) => {
       return obj.id == data.departamento;
     });
@@ -63,8 +95,8 @@ const CadastrarCurso: React.FC<CadastrarCursoProps> = ({ show, setShow }) => {
       method: "POST",
       body: JSON.stringify({
         nome: data.nome,
-        periodos: data.periodo,
         departamento: departamento,
+        periodos: data.periodo,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -77,23 +109,36 @@ const CadastrarCurso: React.FC<CadastrarCursoProps> = ({ show, setShow }) => {
       .catch((err) => {
         console.log(err.message);
       });
+  };
 
-    setShow(false);
-    reset();
+  const editCurso = async (id: number, data: Inputs) => {
+    // editar
   };
 
   return (
     <>
-      <Button variant="primary" onClick={handleOpen}>
-        Cadastrar
-      </Button>
+      {editData !== undefined ? (
+        <button
+          type="button"
+          className="text-primary p-1 hover:bg-gray-50 rounded-full transition duration-200"
+          onClick={handleEditOpen}
+        >
+          <HiOutlinePencilAlt size={18} />
+        </button>
+      ) : (
+        <Button variant="primary" onClick={() => setShow(true)}>
+          Cadastrar
+        </Button>
+      )}
       {show && (
         <>
           <Modal>
             <form onSubmit={handleSubmit(onSubmit)}>
               <HeaderModal
-                title="Cadastrar Curso"
-                setClose={() => setShow(false)}
+                title={
+                  editData !== undefined ? "Editar Curso" : "Cadastrar Curso"
+                }
+                setClose={handleClose}
               />
               <div className="grid gap-3 px-4 py-6">
                 <Input
@@ -102,9 +147,7 @@ const CadastrarCurso: React.FC<CadastrarCursoProps> = ({ show, setShow }) => {
                   type="text"
                   placeholder="Digite o nome"
                   errors={errors.nome?.message}
-                  {...register("nome", {
-                    required: "Obrigatório",
-                  })}
+                  {...register("nome")}
                 />
                 <Select
                   label="Departamento:"
@@ -133,9 +176,9 @@ const CadastrarCurso: React.FC<CadastrarCursoProps> = ({ show, setShow }) => {
                 />
               </div>
               <FooterModal
-                submit="Salvar"
-                variant="success"
-                setClose={() => setShow(false)}
+                submit={editData !== undefined ? "Editar" : "Cadastrar"}
+                variant={editData !== undefined ? "primary" : "success"}
+                setClose={handleClose}
               />
             </form>
           </Modal>
@@ -145,4 +188,4 @@ const CadastrarCurso: React.FC<CadastrarCursoProps> = ({ show, setShow }) => {
   );
 };
 
-export default CadastrarCurso;
+export default AddEditCurso;

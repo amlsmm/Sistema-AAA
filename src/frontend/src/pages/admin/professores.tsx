@@ -14,6 +14,7 @@ import Excluir from "@components/modal/delete";
 import moment from "moment";
 import { NavbarAdminLinks } from "@utils/data";
 import Navbar from "@components/navigation/navbar";
+import AddEditProfessor from "@components/modal/form/professor";
 
 const columns = [
   {
@@ -55,12 +56,7 @@ const columns = [
           description="Tem certeza que deseja excluir esse professor?"
           onClick={() => (deleteProfessor(props.id))}
         />
-        <button
-          type="button"
-          className="text-primary p-1 hover:bg-gray-50 rounded-full transition duration-200"
-        >
-          <HiOutlinePencilAlt size={18} />
-        </button>
+        {/* <AddEditProfessor editData={props} /> */}
       </div>
     ),
   },
@@ -127,10 +123,7 @@ const Home: NextPage = () => {
       <div className="container py-16">
         <div className="flex justify-between items-center">
           <h2 className="text-gray-700">Professores</h2>
-          <CadastrarProfessor
-            show={showCadastrar}
-            setShow={setShowCadastrar}
-          />
+          <AddEditProfessor />
         </div>
 
         <div className="mt-8 overflow-x-auto animate-fade-in-up text-gray-700">

@@ -14,6 +14,7 @@ import Excluir from "@components/modal/delete";
 import moment from "moment";
 import Navbar from "@components/navigation/navbar";
 import { NavbarAdminLinks } from "@utils/data";
+import AddEditDepartamento from "@components/modal/form/departamento";
 
 const columns = [
   {
@@ -49,12 +50,7 @@ const columns = [
           description="Tem certeza que deseja excluir esse departamento?"
           onClick={() => deleteDepto(props.id)}
         />
-        <button
-          type="button"
-          className="text-primary p-1 hover:bg-gray-50 rounded-full transition duration-200"
-        >
-          <HiOutlinePencilAlt size={18} />
-        </button>
+        {/* <AddEditDepartamento editData={props} /> */}
       </div>
     ),
   },
@@ -80,7 +76,6 @@ const deleteDepto = async (id: number) => {
 };
 
 const Home: NextPage = () => {
-  const [showCadastrar, setShowCadastrar] = useState(false);
   const [deptos, setDeptos] = useState([]);
 
   useEffect(() => {
@@ -109,10 +104,7 @@ const Home: NextPage = () => {
       <div className="container py-16">
         <div className="flex justify-between items-center">
           <h2 className="text-gray-700">Departamentos</h2>
-          <CadastrarDepartamento
-            show={showCadastrar}
-            setShow={setShowCadastrar}
-          />
+          <AddEditDepartamento />
         </div>
 
         <div className="mt-8 overflow-x-auto animate-fade-in-up text-gray-700">

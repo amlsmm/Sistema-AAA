@@ -31,4 +31,9 @@ public class AlunoService {
         alunoRepository.deleteById(id);
     }
 
+    public Aluno editar(Long id, Aluno aluno){
+        aluno.setId(id);
+        return alunoRepository.save(aluno);
+    }
+
 }
