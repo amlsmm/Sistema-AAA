@@ -65,7 +65,7 @@ const Home: NextPage = () => {
     {
       id: "curso",
       name: "Curso",
-      selector: (row: any) => row.curso,
+      selector: (row: any) => row.curso.nome,
       sortable: true,
       width: "25%",
     },
@@ -94,7 +94,7 @@ const Home: NextPage = () => {
             description="Tem certeza que deseja excluir esse aluno?"
             onClick={() => deleteAluno(props.id)}
           />
-          <AddEditAluno editData={props} />
+          <AddEditAluno editData={props.id} />
         </div>
       ),
     },

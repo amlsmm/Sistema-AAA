@@ -79,9 +79,9 @@ const AddEditAluno: React.FC<AddEditAlunoProps> = ({ editData }) => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
-
+    console.log(editData)
     editData !== undefined
-      ? editAluno(editData.id ? editData.id : 0, data)
+      ? editAluno(Number(editData), data)
       : addAluno(data);
 
     setShow(false);
@@ -117,7 +117,33 @@ const AddEditAluno: React.FC<AddEditAlunoProps> = ({ editData }) => {
   };
 
   const editAluno = async (id: number, data: Inputs) => {
-    // editar
+    var curso = cursos.filter((obj: any) => {
+      return obj.id == data.curso;
+    });
+
+    curso = curso[0];
+    console.log(curso, data.nome, data.email, data.matricula, id)
+    
+    let response = await fetch(`http://localhost:8080/api/aluno/editar/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        nome: data.nome,
+        email: data.email,
+        matricula: data.matricula,
+        curso: curso,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+      
   };
 
   return (
