@@ -100,7 +100,7 @@ const AddEditDisciplina: React.FC<AddEditDisciplinaProps> = ({
     console.log(data);
     
     editData !== undefined
-    ? editDisciplina(editData.id ? editData.id : 0, data)
+    ? editDisciplina(Number(editData), data)
     : addDisciplina(data);
 
     setShow(false);
@@ -144,6 +144,38 @@ const AddEditDisciplina: React.FC<AddEditDisciplinaProps> = ({
 
   const editDisciplina = async (id: number, data: Inputs) => {
     // editar
+    var departamento = deptos.filter((obj: any) => {
+      return obj.id == data.departamento;
+    });
+    departamento = departamento[0];
+
+    var professor = deptos.filter((obj: any) => {
+      return obj.id == data.professor;
+    });
+    professor = professor[0];
+
+    console.log(departamento, data.nome, data.codigo, professor, id)
+
+    let response = await fetch(`http://localhost:8080/api/disciplina/editar/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        nome: data.nome,
+        codigo: data.codigo,
+        professor: professor,
+        departamento: departamento,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+      
   };
 
   return (
