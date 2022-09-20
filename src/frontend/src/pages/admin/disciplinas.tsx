@@ -13,6 +13,7 @@ import { EmptyTable } from "@components/empty/table";
 import Excluir from "@components/modal/delete";
 import Navbar from "@components/navigation/navbar";
 import { NavbarAdminLinks } from "@utils/data";
+import AddEditDisciplina from "@components/modal/form/disciplina";
 
 const columns = [
   {
@@ -52,12 +53,7 @@ const columns = [
           description="Tem certeza que deseja excluir esse disciplina?"
           onClick={() => deleteDepto(props.id)}
         />
-        <button
-          type="button"
-          className="text-primary p-1 hover:bg-gray-50 rounded-full transition duration-200"
-        >
-          <HiOutlinePencilAlt size={18} />
-        </button>
+        <AddEditDisciplina editData={props} />
       </div>
     ),
   },
@@ -94,7 +90,6 @@ const data = [
 */
 
 const Home: NextPage = () => {
-  const [showCadastrar, setShowCadastrar] = useState(false);
   const [disciplinas, setDisciplinas] = useState([]);
 
   useEffect(() => {
@@ -123,10 +118,7 @@ const Home: NextPage = () => {
       <div className="container py-16">
         <div className="flex justify-between items-center">
           <h2 className="text-gray-700">Disciplinas</h2>
-          <CadastrarDisciplina
-            show={showCadastrar}
-            setShow={setShowCadastrar}
-          />
+          <AddEditDisciplina />
         </div>
 
         <div className="mt-8 overflow-x-auto animate-fade-in-up text-gray-700">
@@ -137,7 +129,7 @@ const Home: NextPage = () => {
             paginationComponentOptions={paginationComponentOptions}
             highlightOnHover
             pointerOnHover
-            noDataComponent={<EmptyTable title="Não há disciplinas cadastrados :(" description="Cadastre um disciplina no botão Cadastrar!" icon={HiOutlineBookOpen} />}
+            noDataComponent={<EmptyTable title="Não há disciplinas cadastradas :(" description="Cadastre uma disciplina no botão Cadastrar!" icon={HiOutlineBookOpen} />}
           />
         </div>
       </div>

@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
-import { useState } from "react";
-import { HiOutlinePencilAlt, HiOutlineBookOpen } from "react-icons/hi";
+import { HiOutlineBookOpen } from "react-icons/hi";
 /* templates */
 import { Meta } from "@templates/meta";
 import { Template } from "@templates/template";
@@ -8,9 +7,7 @@ import { Template } from "@templates/template";
 import { paginationComponentOptions } from "@utils/table";
 /* components */
 import DataTable from "react-data-table-component";
-import CadastrarDisciplina from "@components/modal/form/disciplina";
 import { EmptyTable } from "@components/empty/table";
-import Excluir from "@components/modal/delete";
 import { NavbarAlunoLinks } from "@utils/data";
 import Navbar from "@components/navigation/navbar";
 import Button from "@components/elements/button";
