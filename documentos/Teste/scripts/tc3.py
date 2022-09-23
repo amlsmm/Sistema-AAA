@@ -1,13 +1,13 @@
+from selenium import webdriver
 from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
+from webdriver_manager.firefox import GeckoDriverManager
 
 import time
 
-options=Options()
-service = Service(r'./geckodriver')
 
-driver = Firefox(service=service, options=options)
+driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
 driver.get('http://localhost:3000/admin/professores')
 
 

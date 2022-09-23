@@ -139,7 +139,7 @@ const AddEditDepartamento: React.FC<AddEditDepartamentoProps> = ({
                 />
               </div>
               <FooterModal
-                submit={editData !== undefined ? "Editar" : "Cadastrar"}
+                submit={editData !== undefined ? "Editar" : "Salvar"}
                 variant={editData !== undefined ? "primary" : "success"}
                 setClose={handleClose}
               />
